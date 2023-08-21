@@ -36,29 +36,17 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CLSCompliant(false)]
 public partial class AstraBaseListener : IAstraListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.parse"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.program"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterParse([NotNull] AstraParser.ParseContext context) { }
+	public virtual void EnterProgram([NotNull] AstraParser.ProgramContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.parse"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.program"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitParse([NotNull] AstraParser.ParseContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.block"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterBlock([NotNull] AstraParser.BlockContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.block"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitBlock([NotNull] AstraParser.BlockContext context) { }
+	public virtual void ExitProgram([NotNull] AstraParser.ProgramContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="AstraParser.statement"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -72,499 +60,65 @@ public partial class AstraBaseListener : IAstraListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitStatement([NotNull] AstraParser.StatementContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.assignment"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.declaration"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterAssignment([NotNull] AstraParser.AssignmentContext context) { }
+	public virtual void EnterDeclaration([NotNull] AstraParser.DeclarationContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.assignment"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.declaration"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitAssignment([NotNull] AstraParser.AssignmentContext context) { }
+	public virtual void ExitDeclaration([NotNull] AstraParser.DeclarationContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by the <c>identifierFunctionCall</c>
-	/// labeled alternative in <see cref="AstraParser.functionCall"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterIdentifierFunctionCall([NotNull] AstraParser.IdentifierFunctionCallContext context) { }
+	public virtual void EnterExpression([NotNull] AstraParser.ExpressionContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by the <c>identifierFunctionCall</c>
-	/// labeled alternative in <see cref="AstraParser.functionCall"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitIdentifierFunctionCall([NotNull] AstraParser.IdentifierFunctionCallContext context) { }
+	public virtual void ExitExpression([NotNull] AstraParser.ExpressionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by the <c>printlnFunctionCall</c>
-	/// labeled alternative in <see cref="AstraParser.functionCall"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.additive_expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterPrintlnFunctionCall([NotNull] AstraParser.PrintlnFunctionCallContext context) { }
+	public virtual void EnterAdditive_expression([NotNull] AstraParser.Additive_expressionContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by the <c>printlnFunctionCall</c>
-	/// labeled alternative in <see cref="AstraParser.functionCall"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.additive_expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitPrintlnFunctionCall([NotNull] AstraParser.PrintlnFunctionCallContext context) { }
+	public virtual void ExitAdditive_expression([NotNull] AstraParser.Additive_expressionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by the <c>printFunctionCall</c>
-	/// labeled alternative in <see cref="AstraParser.functionCall"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.multiplicative_expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterPrintFunctionCall([NotNull] AstraParser.PrintFunctionCallContext context) { }
+	public virtual void EnterMultiplicative_expression([NotNull] AstraParser.Multiplicative_expressionContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by the <c>printFunctionCall</c>
-	/// labeled alternative in <see cref="AstraParser.functionCall"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.multiplicative_expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitPrintFunctionCall([NotNull] AstraParser.PrintFunctionCallContext context) { }
+	public virtual void ExitMultiplicative_expression([NotNull] AstraParser.Multiplicative_expressionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by the <c>assertFunctionCall</c>
-	/// labeled alternative in <see cref="AstraParser.functionCall"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.primary_expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterAssertFunctionCall([NotNull] AstraParser.AssertFunctionCallContext context) { }
+	public virtual void EnterPrimary_expression([NotNull] AstraParser.Primary_expressionContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by the <c>assertFunctionCall</c>
-	/// labeled alternative in <see cref="AstraParser.functionCall"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.primary_expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitAssertFunctionCall([NotNull] AstraParser.AssertFunctionCallContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>sizeFunctionCall</c>
-	/// labeled alternative in <see cref="AstraParser.functionCall"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterSizeFunctionCall([NotNull] AstraParser.SizeFunctionCallContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>sizeFunctionCall</c>
-	/// labeled alternative in <see cref="AstraParser.functionCall"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitSizeFunctionCall([NotNull] AstraParser.SizeFunctionCallContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.ifStatement"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterIfStatement([NotNull] AstraParser.IfStatementContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.ifStatement"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitIfStatement([NotNull] AstraParser.IfStatementContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.ifStat"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterIfStat([NotNull] AstraParser.IfStatContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.ifStat"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitIfStat([NotNull] AstraParser.IfStatContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.elseIfStat"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterElseIfStat([NotNull] AstraParser.ElseIfStatContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.elseIfStat"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitElseIfStat([NotNull] AstraParser.ElseIfStatContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.elseStat"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterElseStat([NotNull] AstraParser.ElseStatContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.elseStat"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitElseStat([NotNull] AstraParser.ElseStatContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.functionDecl"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterFunctionDecl([NotNull] AstraParser.FunctionDeclContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.functionDecl"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitFunctionDecl([NotNull] AstraParser.FunctionDeclContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.forStatement"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterForStatement([NotNull] AstraParser.ForStatementContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.forStatement"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitForStatement([NotNull] AstraParser.ForStatementContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.whileStatement"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterWhileStatement([NotNull] AstraParser.WhileStatementContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.whileStatement"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitWhileStatement([NotNull] AstraParser.WhileStatementContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.idList"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterIdList([NotNull] AstraParser.IdListContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.idList"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitIdList([NotNull] AstraParser.IdListContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.exprList"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterExprList([NotNull] AstraParser.ExprListContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.exprList"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitExprList([NotNull] AstraParser.ExprListContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>boolExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterBoolExpression([NotNull] AstraParser.BoolExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>boolExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitBoolExpression([NotNull] AstraParser.BoolExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>numberExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterNumberExpression([NotNull] AstraParser.NumberExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>numberExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitNumberExpression([NotNull] AstraParser.NumberExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>identifierExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterIdentifierExpression([NotNull] AstraParser.IdentifierExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>identifierExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitIdentifierExpression([NotNull] AstraParser.IdentifierExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>notExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterNotExpression([NotNull] AstraParser.NotExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>notExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitNotExpression([NotNull] AstraParser.NotExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>orExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterOrExpression([NotNull] AstraParser.OrExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>orExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitOrExpression([NotNull] AstraParser.OrExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>unaryMinusExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterUnaryMinusExpression([NotNull] AstraParser.UnaryMinusExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>unaryMinusExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitUnaryMinusExpression([NotNull] AstraParser.UnaryMinusExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>powerExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterPowerExpression([NotNull] AstraParser.PowerExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>powerExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitPowerExpression([NotNull] AstraParser.PowerExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>eqExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterEqExpression([NotNull] AstraParser.EqExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>eqExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitEqExpression([NotNull] AstraParser.EqExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>andExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterAndExpression([NotNull] AstraParser.AndExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>andExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitAndExpression([NotNull] AstraParser.AndExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>inExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterInExpression([NotNull] AstraParser.InExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>inExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitInExpression([NotNull] AstraParser.InExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>stringExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterStringExpression([NotNull] AstraParser.StringExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>stringExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitStringExpression([NotNull] AstraParser.StringExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>expressionExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterExpressionExpression([NotNull] AstraParser.ExpressionExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>expressionExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitExpressionExpression([NotNull] AstraParser.ExpressionExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>addExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterAddExpression([NotNull] AstraParser.AddExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>addExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitAddExpression([NotNull] AstraParser.AddExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>compExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterCompExpression([NotNull] AstraParser.CompExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>compExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitCompExpression([NotNull] AstraParser.CompExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>nullExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterNullExpression([NotNull] AstraParser.NullExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>nullExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitNullExpression([NotNull] AstraParser.NullExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>functionCallExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterFunctionCallExpression([NotNull] AstraParser.FunctionCallExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>functionCallExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitFunctionCallExpression([NotNull] AstraParser.FunctionCallExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>multExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterMultExpression([NotNull] AstraParser.MultExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>multExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitMultExpression([NotNull] AstraParser.MultExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>listExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterListExpression([NotNull] AstraParser.ListExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>listExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitListExpression([NotNull] AstraParser.ListExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>ternaryExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterTernaryExpression([NotNull] AstraParser.TernaryExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>ternaryExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitTernaryExpression([NotNull] AstraParser.TernaryExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by the <c>inputExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterInputExpression([NotNull] AstraParser.InputExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by the <c>inputExpression</c>
-	/// labeled alternative in <see cref="AstraParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitInputExpression([NotNull] AstraParser.InputExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.list"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterList([NotNull] AstraParser.ListContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.list"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitList([NotNull] AstraParser.ListContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.indexes"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterIndexes([NotNull] AstraParser.IndexesContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.indexes"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitIndexes([NotNull] AstraParser.IndexesContext context) { }
+	public virtual void ExitPrimary_expression([NotNull] AstraParser.Primary_expressionContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

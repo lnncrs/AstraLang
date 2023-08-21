@@ -36,40 +36,23 @@ public partial class AstraParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		Println=1, Print=2, Input=3, Assert=4, Size=5, Def=6, If=7, Else=8, Return=9, 
-		For=10, While=11, To=12, Do=13, End=14, In=15, Null=16, Or=17, And=18, 
-		Equals=19, NEquals=20, GTEquals=21, LTEquals=22, Pow=23, Excl=24, GT=25, 
-		LT=26, Add=27, Subtract=28, Multiply=29, Divide=30, Modulus=31, OBrace=32, 
-		CBrace=33, OBracket=34, CBracket=35, OParen=36, CParen=37, SColon=38, 
-		Assign=39, Comma=40, QMark=41, Colon=42, Bool=43, Number=44, Identifier=45, 
-		String=46, Comment=47, Space=48;
+		T__0=1, T__1=2, INT=3, DOUBLE=4, STRING=5, ID=6, INTVAL=7, DOUBLEVAL=8, 
+		STRINGVAL=9, ADD=10, SUB=11, MUL=12, DIV=13;
 	public const int
-		RULE_parse = 0, RULE_block = 1, RULE_statement = 2, RULE_assignment = 3, 
-		RULE_functionCall = 4, RULE_ifStatement = 5, RULE_ifStat = 6, RULE_elseIfStat = 7, 
-		RULE_elseStat = 8, RULE_functionDecl = 9, RULE_forStatement = 10, RULE_whileStatement = 11, 
-		RULE_idList = 12, RULE_exprList = 13, RULE_expression = 14, RULE_list = 15, 
-		RULE_indexes = 16;
+		RULE_program = 0, RULE_statement = 1, RULE_declaration = 2, RULE_expression = 3, 
+		RULE_additive_expression = 4, RULE_multiplicative_expression = 5, RULE_primary_expression = 6;
 	public static readonly string[] ruleNames = {
-		"parse", "block", "statement", "assignment", "functionCall", "ifStatement", 
-		"ifStat", "elseIfStat", "elseStat", "functionDecl", "forStatement", "whileStatement", 
-		"idList", "exprList", "expression", "list", "indexes"
+		"program", "statement", "declaration", "expression", "additive_expression", 
+		"multiplicative_expression", "primary_expression"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'println'", "'print'", "'input'", "'assert'", "'size'", "'def'", 
-		"'if'", "'else'", "'return'", "'for'", "'while'", "'to'", "'do'", "'end'", 
-		"'in'", "'null'", "'||'", "'&&'", "'=='", "'!='", "'>='", "'<='", "'^'", 
-		"'!'", "'>'", "'<'", "'+'", "'-'", "'*'", "'/'", "'%'", "'{'", "'}'", 
-		"'['", "']'", "'('", "')'", "';'", "'='", "','", "'?'", "':'"
+		null, "'='", "';'", "'int'", "'double'", "'string'", null, null, null, 
+		null, "'+'", "'-'", "'*'", "'/'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "Println", "Print", "Input", "Assert", "Size", "Def", "If", "Else", 
-		"Return", "For", "While", "To", "Do", "End", "In", "Null", "Or", "And", 
-		"Equals", "NEquals", "GTEquals", "LTEquals", "Pow", "Excl", "GT", "LT", 
-		"Add", "Subtract", "Multiply", "Divide", "Modulus", "OBrace", "CBrace", 
-		"OBracket", "CBracket", "OParen", "CParen", "SColon", "Assign", "Comma", 
-		"QMark", "Colon", "Bool", "Number", "Identifier", "String", "Comment", 
-		"Space"
+		null, null, null, "INT", "DOUBLE", "STRING", "ID", "INTVAL", "DOUBLEVAL", 
+		"STRINGVAL", "ADD", "SUB", "MUL", "DIV"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -103,144 +86,52 @@ public partial class AstraParser : Parser {
 		Interpreter = new ParserATNSimulator(this, _ATN, decisionToDFA, sharedContextCache);
 	}
 
-	public partial class ParseContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
-			return GetRuleContext<BlockContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Eof() { return GetToken(AstraParser.Eof, 0); }
-		public ParseContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_parse; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterParse(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitParse(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public ParseContext parse() {
-		ParseContext _localctx = new ParseContext(Context, State);
-		EnterRule(_localctx, 0, RULE_parse);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 34;
-			block();
-			State = 35;
-			Match(Eof);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class BlockContext : ParserRuleContext {
+	public partial class ProgramContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public StatementContext[] statement() {
 			return GetRuleContexts<StatementContext>();
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public StatementContext statement(int i) {
 			return GetRuleContext<StatementContext>(i);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public FunctionDeclContext[] functionDecl() {
-			return GetRuleContexts<FunctionDeclContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public FunctionDeclContext functionDecl(int i) {
-			return GetRuleContext<FunctionDeclContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Return() { return GetToken(AstraParser.Return, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SColon() { return GetToken(AstraParser.SColon, 0); }
-		public BlockContext(ParserRuleContext parent, int invokingState)
+		public ProgramContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_block; } }
+		public override int RuleIndex { get { return RULE_program; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterBlock(this);
+			if (typedListener != null) typedListener.EnterProgram(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitBlock(this);
+			if (typedListener != null) typedListener.ExitProgram(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public BlockContext block() {
-		BlockContext _localctx = new BlockContext(Context, State);
-		EnterRule(_localctx, 2, RULE_block);
+	public ProgramContext program() {
+		ProgramContext _localctx = new ProgramContext(Context, State);
+		EnterRule(_localctx, 0, RULE_program);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 41;
+			State = 15;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 35184372092150L) != 0)) {
+			do {
 				{
-				State = 39;
-				ErrorHandler.Sync(this);
-				switch (TokenStream.LA(1)) {
-				case Println:
-				case Print:
-				case Assert:
-				case Size:
-				case If:
-				case For:
-				case While:
-				case Identifier:
-					{
-					State = 37;
-					statement();
-					}
-					break;
-				case Def:
-					{
-					State = 38;
-					functionDecl();
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
+				{
+				State = 14;
+				statement();
 				}
 				}
-				State = 43;
+				State = 17;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-			}
-			State = 48;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==Return) {
-				{
-				State = 44;
-				Match(Return);
-				State = 45;
-				expression(0);
-				State = 46;
-				Match(SColon);
-				}
-			}
-
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 120L) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -255,21 +146,11 @@ public partial class AstraParser : Parser {
 	}
 
 	public partial class StatementContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public AssignmentContext assignment() {
-			return GetRuleContext<AssignmentContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public DeclarationContext declaration() {
+			return GetRuleContext<DeclarationContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SColon() { return GetToken(AstraParser.SColon, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public FunctionCallContext functionCall() {
-			return GetRuleContext<FunctionCallContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public IfStatementContext ifStatement() {
-			return GetRuleContext<IfStatementContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ForStatementContext forStatement() {
-			return GetRuleContext<ForStatementContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public WhileStatementContext whileStatement() {
-			return GetRuleContext<WhileStatementContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
 		}
 		public StatementContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -291,327 +172,25 @@ public partial class AstraParser : Parser {
 	[RuleVersion(0)]
 	public StatementContext statement() {
 		StatementContext _localctx = new StatementContext(Context, State);
-		EnterRule(_localctx, 4, RULE_statement);
+		EnterRule(_localctx, 2, RULE_statement);
 		try {
-			State = 59;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,3,Context) ) {
-			case 1:
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 50;
-				assignment();
-				State = 51;
-				Match(SColon);
-				}
-				break;
-			case 2:
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 53;
-				functionCall();
-				State = 54;
-				Match(SColon);
-				}
-				break;
-			case 3:
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 56;
-				ifStatement();
-				}
-				break;
-			case 4:
-				EnterOuterAlt(_localctx, 4);
-				{
-				State = 57;
-				forStatement();
-				}
-				break;
-			case 5:
-				EnterOuterAlt(_localctx, 5);
-				{
-				State = 58;
-				whileStatement();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class AssignmentContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Identifier() { return GetToken(AstraParser.Identifier, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Assign() { return GetToken(AstraParser.Assign, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public IndexesContext indexes() {
-			return GetRuleContext<IndexesContext>(0);
-		}
-		public AssignmentContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_assignment; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterAssignment(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitAssignment(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public AssignmentContext assignment() {
-		AssignmentContext _localctx = new AssignmentContext(Context, State);
-		EnterRule(_localctx, 6, RULE_assignment);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 61;
-			Match(Identifier);
-			State = 63;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==OBracket) {
-				{
-				State = 62;
-				indexes();
-				}
-			}
-
-			State = 65;
-			Match(Assign);
-			State = 66;
-			expression(0);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class FunctionCallContext : ParserRuleContext {
-		public FunctionCallContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_functionCall; } }
-	 
-		public FunctionCallContext() { }
-		public virtual void CopyFrom(FunctionCallContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class AssertFunctionCallContext : FunctionCallContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Assert() { return GetToken(AstraParser.Assert, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OParen() { return GetToken(AstraParser.OParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CParen() { return GetToken(AstraParser.CParen, 0); }
-		public AssertFunctionCallContext(FunctionCallContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterAssertFunctionCall(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitAssertFunctionCall(this);
-		}
-	}
-	public partial class SizeFunctionCallContext : FunctionCallContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Size() { return GetToken(AstraParser.Size, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OParen() { return GetToken(AstraParser.OParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CParen() { return GetToken(AstraParser.CParen, 0); }
-		public SizeFunctionCallContext(FunctionCallContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterSizeFunctionCall(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitSizeFunctionCall(this);
-		}
-	}
-	public partial class PrintlnFunctionCallContext : FunctionCallContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Println() { return GetToken(AstraParser.Println, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OParen() { return GetToken(AstraParser.OParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CParen() { return GetToken(AstraParser.CParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		public PrintlnFunctionCallContext(FunctionCallContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterPrintlnFunctionCall(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitPrintlnFunctionCall(this);
-		}
-	}
-	public partial class IdentifierFunctionCallContext : FunctionCallContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Identifier() { return GetToken(AstraParser.Identifier, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OParen() { return GetToken(AstraParser.OParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CParen() { return GetToken(AstraParser.CParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExprListContext exprList() {
-			return GetRuleContext<ExprListContext>(0);
-		}
-		public IdentifierFunctionCallContext(FunctionCallContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterIdentifierFunctionCall(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitIdentifierFunctionCall(this);
-		}
-	}
-	public partial class PrintFunctionCallContext : FunctionCallContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Print() { return GetToken(AstraParser.Print, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OParen() { return GetToken(AstraParser.OParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CParen() { return GetToken(AstraParser.CParen, 0); }
-		public PrintFunctionCallContext(FunctionCallContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterPrintFunctionCall(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitPrintFunctionCall(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public FunctionCallContext functionCall() {
-		FunctionCallContext _localctx = new FunctionCallContext(Context, State);
-		EnterRule(_localctx, 8, RULE_functionCall);
-		int _la;
-		try {
-			State = 95;
+			State = 21;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case Identifier:
-				_localctx = new IdentifierFunctionCallContext(_localctx);
+			case INT:
+			case DOUBLE:
+			case STRING:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 68;
-				Match(Identifier);
-				State = 69;
-				Match(OParen);
-				State = 71;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 132027579957310L) != 0)) {
-					{
-					State = 70;
-					exprList();
-					}
-				}
-
-				State = 73;
-				Match(CParen);
+				State = 19;
+				declaration();
 				}
 				break;
-			case Println:
-				_localctx = new PrintlnFunctionCallContext(_localctx);
+			case ID:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 74;
-				Match(Println);
-				State = 75;
-				Match(OParen);
-				State = 77;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 132027579957310L) != 0)) {
-					{
-					State = 76;
-					expression(0);
-					}
-				}
-
-				State = 79;
-				Match(CParen);
-				}
-				break;
-			case Print:
-				_localctx = new PrintFunctionCallContext(_localctx);
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 80;
-				Match(Print);
-				State = 81;
-				Match(OParen);
-				State = 82;
-				expression(0);
-				State = 83;
-				Match(CParen);
-				}
-				break;
-			case Assert:
-				_localctx = new AssertFunctionCallContext(_localctx);
-				EnterOuterAlt(_localctx, 4);
-				{
-				State = 85;
-				Match(Assert);
-				State = 86;
-				Match(OParen);
-				State = 87;
-				expression(0);
-				State = 88;
-				Match(CParen);
-				}
-				break;
-			case Size:
-				_localctx = new SizeFunctionCallContext(_localctx);
-				EnterOuterAlt(_localctx, 5);
-				{
-				State = 90;
-				Match(Size);
-				State = 91;
-				Match(OParen);
-				State = 92;
-				expression(0);
-				State = 93;
-				Match(CParen);
+				State = 20;
+				expression();
 				}
 				break;
 			default:
@@ -629,568 +208,86 @@ public partial class AstraParser : Parser {
 		return _localctx;
 	}
 
-	public partial class IfStatementContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public IfStatContext ifStat() {
-			return GetRuleContext<IfStatContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode End() { return GetToken(AstraParser.End, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ElseIfStatContext[] elseIfStat() {
-			return GetRuleContexts<ElseIfStatContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ElseIfStatContext elseIfStat(int i) {
-			return GetRuleContext<ElseIfStatContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ElseStatContext elseStat() {
-			return GetRuleContext<ElseStatContext>(0);
-		}
-		public IfStatementContext(ParserRuleContext parent, int invokingState)
+	public partial class DeclarationContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INT() { return GetToken(AstraParser.INT, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(AstraParser.ID, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTVAL() { return GetToken(AstraParser.INTVAL, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DOUBLE() { return GetToken(AstraParser.DOUBLE, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DOUBLEVAL() { return GetToken(AstraParser.DOUBLEVAL, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRING() { return GetToken(AstraParser.STRING, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRINGVAL() { return GetToken(AstraParser.STRINGVAL, 0); }
+		public DeclarationContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_ifStatement; } }
+		public override int RuleIndex { get { return RULE_declaration; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterIfStatement(this);
+			if (typedListener != null) typedListener.EnterDeclaration(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitIfStatement(this);
+			if (typedListener != null) typedListener.ExitDeclaration(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public IfStatementContext ifStatement() {
-		IfStatementContext _localctx = new IfStatementContext(Context, State);
-		EnterRule(_localctx, 10, RULE_ifStatement);
-		int _la;
+	public DeclarationContext declaration() {
+		DeclarationContext _localctx = new DeclarationContext(Context, State);
+		EnterRule(_localctx, 4, RULE_declaration);
 		try {
-			int _alt;
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 97;
-			ifStat();
-			State = 101;
+			State = 38;
 			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,8,Context);
-			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
-					{
-					{
-					State = 98;
-					elseIfStat();
-					}
-					} 
-				}
-				State = 103;
-				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,8,Context);
-			}
-			State = 105;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==Else) {
+			switch (TokenStream.LA(1)) {
+			case INT:
+				EnterOuterAlt(_localctx, 1);
 				{
-				State = 104;
-				elseStat();
+				State = 23;
+				Match(INT);
+				State = 24;
+				Match(ID);
+				State = 25;
+				Match(T__0);
+				State = 26;
+				Match(INTVAL);
+				State = 27;
+				Match(T__1);
 				}
-			}
-
-			State = 107;
-			Match(End);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class IfStatContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode If() { return GetToken(AstraParser.If, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Do() { return GetToken(AstraParser.Do, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
-			return GetRuleContext<BlockContext>(0);
-		}
-		public IfStatContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_ifStat; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterIfStat(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitIfStat(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public IfStatContext ifStat() {
-		IfStatContext _localctx = new IfStatContext(Context, State);
-		EnterRule(_localctx, 12, RULE_ifStat);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 109;
-			Match(If);
-			State = 110;
-			expression(0);
-			State = 111;
-			Match(Do);
-			State = 112;
-			block();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class ElseIfStatContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Else() { return GetToken(AstraParser.Else, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode If() { return GetToken(AstraParser.If, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Do() { return GetToken(AstraParser.Do, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
-			return GetRuleContext<BlockContext>(0);
-		}
-		public ElseIfStatContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_elseIfStat; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterElseIfStat(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitElseIfStat(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public ElseIfStatContext elseIfStat() {
-		ElseIfStatContext _localctx = new ElseIfStatContext(Context, State);
-		EnterRule(_localctx, 14, RULE_elseIfStat);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 114;
-			Match(Else);
-			State = 115;
-			Match(If);
-			State = 116;
-			expression(0);
-			State = 117;
-			Match(Do);
-			State = 118;
-			block();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class ElseStatContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Else() { return GetToken(AstraParser.Else, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Do() { return GetToken(AstraParser.Do, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
-			return GetRuleContext<BlockContext>(0);
-		}
-		public ElseStatContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_elseStat; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterElseStat(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitElseStat(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public ElseStatContext elseStat() {
-		ElseStatContext _localctx = new ElseStatContext(Context, State);
-		EnterRule(_localctx, 16, RULE_elseStat);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 120;
-			Match(Else);
-			State = 121;
-			Match(Do);
-			State = 122;
-			block();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class FunctionDeclContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Def() { return GetToken(AstraParser.Def, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Identifier() { return GetToken(AstraParser.Identifier, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OParen() { return GetToken(AstraParser.OParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CParen() { return GetToken(AstraParser.CParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
-			return GetRuleContext<BlockContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode End() { return GetToken(AstraParser.End, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public IdListContext idList() {
-			return GetRuleContext<IdListContext>(0);
-		}
-		public FunctionDeclContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_functionDecl; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterFunctionDecl(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitFunctionDecl(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public FunctionDeclContext functionDecl() {
-		FunctionDeclContext _localctx = new FunctionDeclContext(Context, State);
-		EnterRule(_localctx, 18, RULE_functionDecl);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 124;
-			Match(Def);
-			State = 125;
-			Match(Identifier);
-			State = 126;
-			Match(OParen);
-			State = 128;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==Identifier) {
+				break;
+			case DOUBLE:
+				EnterOuterAlt(_localctx, 2);
 				{
-				State = 127;
-				idList();
+				State = 28;
+				Match(DOUBLE);
+				State = 29;
+				Match(ID);
+				State = 30;
+				Match(T__0);
+				State = 31;
+				Match(DOUBLEVAL);
+				State = 32;
+				Match(T__1);
 				}
-			}
-
-			State = 130;
-			Match(CParen);
-			State = 131;
-			block();
-			State = 132;
-			Match(End);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class ForStatementContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode For() { return GetToken(AstraParser.For, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Identifier() { return GetToken(AstraParser.Identifier, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Assign() { return GetToken(AstraParser.Assign, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode To() { return GetToken(AstraParser.To, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Do() { return GetToken(AstraParser.Do, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
-			return GetRuleContext<BlockContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode End() { return GetToken(AstraParser.End, 0); }
-		public ForStatementContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_forStatement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterForStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitForStatement(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public ForStatementContext forStatement() {
-		ForStatementContext _localctx = new ForStatementContext(Context, State);
-		EnterRule(_localctx, 20, RULE_forStatement);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 134;
-			Match(For);
-			State = 135;
-			Match(Identifier);
-			State = 136;
-			Match(Assign);
-			State = 137;
-			expression(0);
-			State = 138;
-			Match(To);
-			State = 139;
-			expression(0);
-			State = 140;
-			Match(Do);
-			State = 141;
-			block();
-			State = 142;
-			Match(End);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class WhileStatementContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode While() { return GetToken(AstraParser.While, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Do() { return GetToken(AstraParser.Do, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
-			return GetRuleContext<BlockContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode End() { return GetToken(AstraParser.End, 0); }
-		public WhileStatementContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_whileStatement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterWhileStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitWhileStatement(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public WhileStatementContext whileStatement() {
-		WhileStatementContext _localctx = new WhileStatementContext(Context, State);
-		EnterRule(_localctx, 22, RULE_whileStatement);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 144;
-			Match(While);
-			State = 145;
-			expression(0);
-			State = 146;
-			Match(Do);
-			State = 147;
-			block();
-			State = 148;
-			Match(End);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class IdListContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] Identifier() { return GetTokens(AstraParser.Identifier); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Identifier(int i) {
-			return GetToken(AstraParser.Identifier, i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] Comma() { return GetTokens(AstraParser.Comma); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Comma(int i) {
-			return GetToken(AstraParser.Comma, i);
-		}
-		public IdListContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_idList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterIdList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitIdList(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public IdListContext idList() {
-		IdListContext _localctx = new IdListContext(Context, State);
-		EnterRule(_localctx, 24, RULE_idList);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 150;
-			Match(Identifier);
-			State = 155;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==Comma) {
+				break;
+			case STRING:
+				EnterOuterAlt(_localctx, 3);
 				{
-				{
-				State = 151;
-				Match(Comma);
-				State = 152;
-				Match(Identifier);
+				State = 33;
+				Match(STRING);
+				State = 34;
+				Match(ID);
+				State = 35;
+				Match(T__0);
+				State = 36;
+				Match(STRINGVAL);
+				State = 37;
+				Match(T__1);
 				}
-				}
-				State = 157;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class ExprListContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] Comma() { return GetTokens(AstraParser.Comma); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Comma(int i) {
-			return GetToken(AstraParser.Comma, i);
-		}
-		public ExprListContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_exprList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterExprList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitExprList(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public ExprListContext exprList() {
-		ExprListContext _localctx = new ExprListContext(Context, State);
-		EnterRule(_localctx, 26, RULE_exprList);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 158;
-			expression(0);
-			State = 163;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==Comma) {
-				{
-				{
-				State = 159;
-				Match(Comma);
-				State = 160;
-				expression(0);
-				}
-				}
-				State = 165;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1205,811 +302,42 @@ public partial class AstraParser : Parser {
 	}
 
 	public partial class ExpressionContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(AstraParser.ID, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Additive_expressionContext additive_expression() {
+			return GetRuleContext<Additive_expressionContext>(0);
+		}
 		public ExpressionContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
 		public override int RuleIndex { get { return RULE_expression; } }
-	 
-		public ExpressionContext() { }
-		public virtual void CopyFrom(ExpressionContext context) {
-			base.CopyFrom(context);
-		}
-	}
-	public partial class BoolExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Bool() { return GetToken(AstraParser.Bool, 0); }
-		public BoolExpressionContext(ExpressionContext context) { CopyFrom(context); }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterBoolExpression(this);
+			if (typedListener != null) typedListener.EnterExpression(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitBoolExpression(this);
-		}
-	}
-	public partial class NumberExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Number() { return GetToken(AstraParser.Number, 0); }
-		public NumberExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterNumberExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitNumberExpression(this);
-		}
-	}
-	public partial class IdentifierExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Identifier() { return GetToken(AstraParser.Identifier, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public IndexesContext indexes() {
-			return GetRuleContext<IndexesContext>(0);
-		}
-		public IdentifierExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterIdentifierExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitIdentifierExpression(this);
-		}
-	}
-	public partial class NotExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Excl() { return GetToken(AstraParser.Excl, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		public NotExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterNotExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitNotExpression(this);
-		}
-	}
-	public partial class OrExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Or() { return GetToken(AstraParser.Or, 0); }
-		public OrExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterOrExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitOrExpression(this);
-		}
-	}
-	public partial class UnaryMinusExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Subtract() { return GetToken(AstraParser.Subtract, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		public UnaryMinusExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterUnaryMinusExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitUnaryMinusExpression(this);
-		}
-	}
-	public partial class PowerExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Pow() { return GetToken(AstraParser.Pow, 0); }
-		public PowerExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterPowerExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitPowerExpression(this);
-		}
-	}
-	public partial class EqExpressionContext : ExpressionContext {
-		public IToken op;
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Equals() { return GetToken(AstraParser.Equals, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NEquals() { return GetToken(AstraParser.NEquals, 0); }
-		public EqExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterEqExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitEqExpression(this);
-		}
-	}
-	public partial class AndExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode And() { return GetToken(AstraParser.And, 0); }
-		public AndExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterAndExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitAndExpression(this);
-		}
-	}
-	public partial class InExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode In() { return GetToken(AstraParser.In, 0); }
-		public InExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterInExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitInExpression(this);
-		}
-	}
-	public partial class StringExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode String() { return GetToken(AstraParser.String, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public IndexesContext indexes() {
-			return GetRuleContext<IndexesContext>(0);
-		}
-		public StringExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterStringExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitStringExpression(this);
-		}
-	}
-	public partial class ExpressionExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OParen() { return GetToken(AstraParser.OParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CParen() { return GetToken(AstraParser.CParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public IndexesContext indexes() {
-			return GetRuleContext<IndexesContext>(0);
-		}
-		public ExpressionExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterExpressionExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitExpressionExpression(this);
-		}
-	}
-	public partial class AddExpressionContext : ExpressionContext {
-		public IToken op;
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Add() { return GetToken(AstraParser.Add, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Subtract() { return GetToken(AstraParser.Subtract, 0); }
-		public AddExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterAddExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitAddExpression(this);
-		}
-	}
-	public partial class CompExpressionContext : ExpressionContext {
-		public IToken op;
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode GTEquals() { return GetToken(AstraParser.GTEquals, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LTEquals() { return GetToken(AstraParser.LTEquals, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode GT() { return GetToken(AstraParser.GT, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LT() { return GetToken(AstraParser.LT, 0); }
-		public CompExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterCompExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitCompExpression(this);
-		}
-	}
-	public partial class NullExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Null() { return GetToken(AstraParser.Null, 0); }
-		public NullExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterNullExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitNullExpression(this);
-		}
-	}
-	public partial class FunctionCallExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public FunctionCallContext functionCall() {
-			return GetRuleContext<FunctionCallContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public IndexesContext indexes() {
-			return GetRuleContext<IndexesContext>(0);
-		}
-		public FunctionCallExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterFunctionCallExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitFunctionCallExpression(this);
-		}
-	}
-	public partial class MultExpressionContext : ExpressionContext {
-		public IToken op;
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Multiply() { return GetToken(AstraParser.Multiply, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Divide() { return GetToken(AstraParser.Divide, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Modulus() { return GetToken(AstraParser.Modulus, 0); }
-		public MultExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterMultExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitMultExpression(this);
-		}
-	}
-	public partial class ListExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ListContext list() {
-			return GetRuleContext<ListContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public IndexesContext indexes() {
-			return GetRuleContext<IndexesContext>(0);
-		}
-		public ListExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterListExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitListExpression(this);
-		}
-	}
-	public partial class TernaryExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode QMark() { return GetToken(AstraParser.QMark, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Colon() { return GetToken(AstraParser.Colon, 0); }
-		public TernaryExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterTernaryExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitTernaryExpression(this);
-		}
-	}
-	public partial class InputExpressionContext : ExpressionContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Input() { return GetToken(AstraParser.Input, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OParen() { return GetToken(AstraParser.OParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CParen() { return GetToken(AstraParser.CParen, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode String() { return GetToken(AstraParser.String, 0); }
-		public InputExpressionContext(ExpressionContext context) { CopyFrom(context); }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterInputExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitInputExpression(this);
+			if (typedListener != null) typedListener.ExitExpression(this);
 		}
 	}
 
 	[RuleVersion(0)]
 	public ExpressionContext expression() {
-		return expression(0);
-	}
-
-	private ExpressionContext expression(int _p) {
-		ParserRuleContext _parentctx = Context;
-		int _parentState = State;
-		ExpressionContext _localctx = new ExpressionContext(Context, _parentState);
-		ExpressionContext _prevctx = _localctx;
-		int _startState = 28;
-		EnterRecursionRule(_localctx, 28, RULE_expression, _p);
-		int _la;
-		try {
-			int _alt;
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 202;
-			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,19,Context) ) {
-			case 1:
-				{
-				_localctx = new UnaryMinusExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-
-				State = 167;
-				Match(Subtract);
-				State = 168;
-				expression(20);
-				}
-				break;
-			case 2:
-				{
-				_localctx = new NotExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-				State = 169;
-				Match(Excl);
-				State = 170;
-				expression(19);
-				}
-				break;
-			case 3:
-				{
-				_localctx = new NumberExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-				State = 171;
-				Match(Number);
-				}
-				break;
-			case 4:
-				{
-				_localctx = new BoolExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-				State = 172;
-				Match(Bool);
-				}
-				break;
-			case 5:
-				{
-				_localctx = new NullExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-				State = 173;
-				Match(Null);
-				}
-				break;
-			case 6:
-				{
-				_localctx = new FunctionCallExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-				State = 174;
-				functionCall();
-				State = 176;
-				ErrorHandler.Sync(this);
-				switch ( Interpreter.AdaptivePredict(TokenStream,13,Context) ) {
-				case 1:
-					{
-					State = 175;
-					indexes();
-					}
-					break;
-				}
-				}
-				break;
-			case 7:
-				{
-				_localctx = new ListExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-				State = 178;
-				list();
-				State = 180;
-				ErrorHandler.Sync(this);
-				switch ( Interpreter.AdaptivePredict(TokenStream,14,Context) ) {
-				case 1:
-					{
-					State = 179;
-					indexes();
-					}
-					break;
-				}
-				}
-				break;
-			case 8:
-				{
-				_localctx = new IdentifierExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-				State = 182;
-				Match(Identifier);
-				State = 184;
-				ErrorHandler.Sync(this);
-				switch ( Interpreter.AdaptivePredict(TokenStream,15,Context) ) {
-				case 1:
-					{
-					State = 183;
-					indexes();
-					}
-					break;
-				}
-				}
-				break;
-			case 9:
-				{
-				_localctx = new StringExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-				State = 186;
-				Match(String);
-				State = 188;
-				ErrorHandler.Sync(this);
-				switch ( Interpreter.AdaptivePredict(TokenStream,16,Context) ) {
-				case 1:
-					{
-					State = 187;
-					indexes();
-					}
-					break;
-				}
-				}
-				break;
-			case 10:
-				{
-				_localctx = new ExpressionExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-				State = 190;
-				Match(OParen);
-				State = 191;
-				expression(0);
-				State = 192;
-				Match(CParen);
-				State = 194;
-				ErrorHandler.Sync(this);
-				switch ( Interpreter.AdaptivePredict(TokenStream,17,Context) ) {
-				case 1:
-					{
-					State = 193;
-					indexes();
-					}
-					break;
-				}
-				}
-				break;
-			case 11:
-				{
-				_localctx = new InputExpressionContext(_localctx);
-				Context = _localctx;
-				_prevctx = _localctx;
-				State = 196;
-				Match(Input);
-				State = 197;
-				Match(OParen);
-				State = 199;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-				if (_la==String) {
-					{
-					State = 198;
-					Match(String);
-					}
-				}
-
-				State = 201;
-				Match(CParen);
-				}
-				break;
-			}
-			Context.Stop = TokenStream.LT(-1);
-			State = 236;
-			ErrorHandler.Sync(this);
-			_alt = Interpreter.AdaptivePredict(TokenStream,21,Context);
-			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
-					if ( ParseListeners!=null )
-						TriggerExitRuleEvent();
-					_prevctx = _localctx;
-					{
-					State = 234;
-					ErrorHandler.Sync(this);
-					switch ( Interpreter.AdaptivePredict(TokenStream,20,Context) ) {
-					case 1:
-						{
-						_localctx = new PowerExpressionContext(new ExpressionContext(_parentctx, _parentState));
-						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 204;
-						if (!(Precpred(Context, 18))) throw new FailedPredicateException(this, "Precpred(Context, 18)");
-						State = 205;
-						Match(Pow);
-						State = 206;
-						expression(18);
-						}
-						break;
-					case 2:
-						{
-						_localctx = new MultExpressionContext(new ExpressionContext(_parentctx, _parentState));
-						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 207;
-						if (!(Precpred(Context, 17))) throw new FailedPredicateException(this, "Precpred(Context, 17)");
-						State = 208;
-						((MultExpressionContext)_localctx).op = TokenStream.LT(1);
-						_la = TokenStream.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 3758096384L) != 0)) ) {
-							((MultExpressionContext)_localctx).op = ErrorHandler.RecoverInline(this);
-						}
-						else {
-							ErrorHandler.ReportMatch(this);
-						    Consume();
-						}
-						State = 209;
-						expression(18);
-						}
-						break;
-					case 3:
-						{
-						_localctx = new AddExpressionContext(new ExpressionContext(_parentctx, _parentState));
-						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 210;
-						if (!(Precpred(Context, 16))) throw new FailedPredicateException(this, "Precpred(Context, 16)");
-						State = 211;
-						((AddExpressionContext)_localctx).op = TokenStream.LT(1);
-						_la = TokenStream.LA(1);
-						if ( !(_la==Add || _la==Subtract) ) {
-							((AddExpressionContext)_localctx).op = ErrorHandler.RecoverInline(this);
-						}
-						else {
-							ErrorHandler.ReportMatch(this);
-						    Consume();
-						}
-						State = 212;
-						expression(17);
-						}
-						break;
-					case 4:
-						{
-						_localctx = new CompExpressionContext(new ExpressionContext(_parentctx, _parentState));
-						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 213;
-						if (!(Precpred(Context, 15))) throw new FailedPredicateException(this, "Precpred(Context, 15)");
-						State = 214;
-						((CompExpressionContext)_localctx).op = TokenStream.LT(1);
-						_la = TokenStream.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 106954752L) != 0)) ) {
-							((CompExpressionContext)_localctx).op = ErrorHandler.RecoverInline(this);
-						}
-						else {
-							ErrorHandler.ReportMatch(this);
-						    Consume();
-						}
-						State = 215;
-						expression(16);
-						}
-						break;
-					case 5:
-						{
-						_localctx = new EqExpressionContext(new ExpressionContext(_parentctx, _parentState));
-						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 216;
-						if (!(Precpred(Context, 14))) throw new FailedPredicateException(this, "Precpred(Context, 14)");
-						State = 217;
-						((EqExpressionContext)_localctx).op = TokenStream.LT(1);
-						_la = TokenStream.LA(1);
-						if ( !(_la==Equals || _la==NEquals) ) {
-							((EqExpressionContext)_localctx).op = ErrorHandler.RecoverInline(this);
-						}
-						else {
-							ErrorHandler.ReportMatch(this);
-						    Consume();
-						}
-						State = 218;
-						expression(15);
-						}
-						break;
-					case 6:
-						{
-						_localctx = new AndExpressionContext(new ExpressionContext(_parentctx, _parentState));
-						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 219;
-						if (!(Precpred(Context, 13))) throw new FailedPredicateException(this, "Precpred(Context, 13)");
-						State = 220;
-						Match(And);
-						State = 221;
-						expression(14);
-						}
-						break;
-					case 7:
-						{
-						_localctx = new OrExpressionContext(new ExpressionContext(_parentctx, _parentState));
-						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 222;
-						if (!(Precpred(Context, 12))) throw new FailedPredicateException(this, "Precpred(Context, 12)");
-						State = 223;
-						Match(Or);
-						State = 224;
-						expression(13);
-						}
-						break;
-					case 8:
-						{
-						_localctx = new TernaryExpressionContext(new ExpressionContext(_parentctx, _parentState));
-						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 225;
-						if (!(Precpred(Context, 11))) throw new FailedPredicateException(this, "Precpred(Context, 11)");
-						State = 226;
-						Match(QMark);
-						State = 227;
-						expression(0);
-						State = 228;
-						Match(Colon);
-						State = 229;
-						expression(12);
-						}
-						break;
-					case 9:
-						{
-						_localctx = new InExpressionContext(new ExpressionContext(_parentctx, _parentState));
-						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 231;
-						if (!(Precpred(Context, 10))) throw new FailedPredicateException(this, "Precpred(Context, 10)");
-						State = 232;
-						Match(In);
-						State = 233;
-						expression(11);
-						}
-						break;
-					}
-					} 
-				}
-				State = 238;
-				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,21,Context);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			UnrollRecursionContexts(_parentctx);
-		}
-		return _localctx;
-	}
-
-	public partial class ListContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OBracket() { return GetToken(AstraParser.OBracket, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CBracket() { return GetToken(AstraParser.CBracket, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ExprListContext exprList() {
-			return GetRuleContext<ExprListContext>(0);
-		}
-		public ListContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_list; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitList(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public ListContext list() {
-		ListContext _localctx = new ListContext(Context, State);
-		EnterRule(_localctx, 30, RULE_list);
-		int _la;
+		ExpressionContext _localctx = new ExpressionContext(Context, State);
+		EnterRule(_localctx, 6, RULE_expression);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 239;
-			Match(OBracket);
-			State = 241;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 132027579957310L) != 0)) {
-				{
-				State = 240;
-				exprList();
-				}
-			}
-
-			State = 243;
-			Match(CBracket);
+			State = 40;
+			Match(ID);
+			State = 41;
+			Match(T__0);
+			State = 42;
+			additive_expression();
+			State = 43;
+			Match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -2023,70 +351,78 @@ public partial class AstraParser : Parser {
 		return _localctx;
 	}
 
-	public partial class IndexesContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] OBracket() { return GetTokens(AstraParser.OBracket); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OBracket(int i) {
-			return GetToken(AstraParser.OBracket, i);
+	public partial class Additive_expressionContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public Multiplicative_expressionContext[] multiplicative_expression() {
+			return GetRuleContexts<Multiplicative_expressionContext>();
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
-			return GetRuleContexts<ExpressionContext>();
+		[System.Diagnostics.DebuggerNonUserCode] public Multiplicative_expressionContext multiplicative_expression(int i) {
+			return GetRuleContext<Multiplicative_expressionContext>(i);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
-			return GetRuleContext<ExpressionContext>(i);
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] ADD() { return GetTokens(AstraParser.ADD); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ADD(int i) {
+			return GetToken(AstraParser.ADD, i);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] CBracket() { return GetTokens(AstraParser.CBracket); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CBracket(int i) {
-			return GetToken(AstraParser.CBracket, i);
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] SUB() { return GetTokens(AstraParser.SUB); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SUB(int i) {
+			return GetToken(AstraParser.SUB, i);
 		}
-		public IndexesContext(ParserRuleContext parent, int invokingState)
+		public Additive_expressionContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_indexes; } }
+		public override int RuleIndex { get { return RULE_additive_expression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterIndexes(this);
+			if (typedListener != null) typedListener.EnterAdditive_expression(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitIndexes(this);
+			if (typedListener != null) typedListener.ExitAdditive_expression(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public IndexesContext indexes() {
-		IndexesContext _localctx = new IndexesContext(Context, State);
-		EnterRule(_localctx, 32, RULE_indexes);
+	public Additive_expressionContext additive_expression() {
+		Additive_expressionContext _localctx = new Additive_expressionContext(Context, State);
+		EnterRule(_localctx, 8, RULE_additive_expression);
+		int _la;
 		try {
-			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 249;
+			State = 45;
+			multiplicative_expression();
+			State = 51;
 			ErrorHandler.Sync(this);
-			_alt = 1;
-			do {
-				switch (_alt) {
-				case 1:
+			_la = TokenStream.LA(1);
+			while (_la==ADD || _la==SUB) {
+				{
+				State = 49;
+				ErrorHandler.Sync(this);
+				switch (TokenStream.LA(1)) {
+				case ADD:
 					{
-					{
-					State = 245;
-					Match(OBracket);
-					State = 246;
-					expression(0);
-					State = 247;
-					Match(CBracket);
+					State = 46;
+					Match(ADD);
 					}
+					break;
+				case SUB:
+					{
+					State = 47;
+					Match(SUB);
+					State = 48;
+					multiplicative_expression();
 					}
 					break;
 				default:
 					throw new NoViableAltException(this);
 				}
-				State = 251;
+				}
+				State = 53;
 				ErrorHandler.Sync(this);
-				_alt = Interpreter.AdaptivePredict(TokenStream,23,Context);
-			} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER );
+				_la = TokenStream.LA(1);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -2100,112 +436,163 @@ public partial class AstraParser : Parser {
 		return _localctx;
 	}
 
-	public override bool Sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
-		switch (ruleIndex) {
-		case 14: return expression_sempred((ExpressionContext)_localctx, predIndex);
+	public partial class Multiplicative_expressionContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public Primary_expressionContext[] primary_expression() {
+			return GetRuleContexts<Primary_expressionContext>();
 		}
-		return true;
+		[System.Diagnostics.DebuggerNonUserCode] public Primary_expressionContext primary_expression(int i) {
+			return GetRuleContext<Primary_expressionContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] MUL() { return GetTokens(AstraParser.MUL); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode MUL(int i) {
+			return GetToken(AstraParser.MUL, i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] DIV() { return GetTokens(AstraParser.DIV); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DIV(int i) {
+			return GetToken(AstraParser.DIV, i);
+		}
+		public Multiplicative_expressionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_multiplicative_expression; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterMultiplicative_expression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitMultiplicative_expression(this);
+		}
 	}
-	private bool expression_sempred(ExpressionContext _localctx, int predIndex) {
-		switch (predIndex) {
-		case 0: return Precpred(Context, 18);
-		case 1: return Precpred(Context, 17);
-		case 2: return Precpred(Context, 16);
-		case 3: return Precpred(Context, 15);
-		case 4: return Precpred(Context, 14);
-		case 5: return Precpred(Context, 13);
-		case 6: return Precpred(Context, 12);
-		case 7: return Precpred(Context, 11);
-		case 8: return Precpred(Context, 10);
+
+	[RuleVersion(0)]
+	public Multiplicative_expressionContext multiplicative_expression() {
+		Multiplicative_expressionContext _localctx = new Multiplicative_expressionContext(Context, State);
+		EnterRule(_localctx, 10, RULE_multiplicative_expression);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 54;
+			primary_expression();
+			State = 60;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while (_la==MUL || _la==DIV) {
+				{
+				State = 58;
+				ErrorHandler.Sync(this);
+				switch (TokenStream.LA(1)) {
+				case MUL:
+					{
+					State = 55;
+					Match(MUL);
+					}
+					break;
+				case DIV:
+					{
+					State = 56;
+					Match(DIV);
+					State = 57;
+					primary_expression();
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				}
+				State = 62;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			}
 		}
-		return true;
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Primary_expressionContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTVAL() { return GetToken(AstraParser.INTVAL, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DOUBLEVAL() { return GetToken(AstraParser.DOUBLEVAL, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRINGVAL() { return GetToken(AstraParser.STRINGVAL, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(AstraParser.ID, 0); }
+		public Primary_expressionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_primary_expression; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterPrimary_expression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitPrimary_expression(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Primary_expressionContext primary_expression() {
+		Primary_expressionContext _localctx = new Primary_expressionContext(Context, State);
+		EnterRule(_localctx, 12, RULE_primary_expression);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 63;
+			_la = TokenStream.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 960L) != 0)) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
 	}
 
 	private static int[] _serializedATN = {
-		4,1,48,254,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
-		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
-		2,15,7,15,2,16,7,16,1,0,1,0,1,0,1,1,1,1,5,1,40,8,1,10,1,12,1,43,9,1,1,
-		1,1,1,1,1,1,1,3,1,49,8,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,60,8,
-		2,1,3,1,3,3,3,64,8,3,1,3,1,3,1,3,1,4,1,4,1,4,3,4,72,8,4,1,4,1,4,1,4,1,
-		4,3,4,78,8,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,
-		4,1,4,3,4,96,8,4,1,5,1,5,5,5,100,8,5,10,5,12,5,103,9,5,1,5,3,5,106,8,5,
-		1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,
-		9,1,9,1,9,1,9,3,9,129,8,9,1,9,1,9,1,9,1,9,1,10,1,10,1,10,1,10,1,10,1,10,
-		1,10,1,10,1,10,1,10,1,11,1,11,1,11,1,11,1,11,1,11,1,12,1,12,1,12,5,12,
-		154,8,12,10,12,12,12,157,9,12,1,13,1,13,1,13,5,13,162,8,13,10,13,12,13,
-		165,9,13,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,3,14,177,8,
-		14,1,14,1,14,3,14,181,8,14,1,14,1,14,3,14,185,8,14,1,14,1,14,3,14,189,
-		8,14,1,14,1,14,1,14,1,14,3,14,195,8,14,1,14,1,14,1,14,3,14,200,8,14,1,
-		14,3,14,203,8,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,
-		1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,
-		1,14,1,14,1,14,1,14,1,14,5,14,235,8,14,10,14,12,14,238,9,14,1,15,1,15,
-		3,15,242,8,15,1,15,1,15,1,16,1,16,1,16,1,16,4,16,250,8,16,11,16,12,16,
-		251,1,16,0,1,28,17,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,0,4,1,
-		0,29,31,1,0,27,28,2,0,21,22,25,26,1,0,19,20,282,0,34,1,0,0,0,2,41,1,0,
-		0,0,4,59,1,0,0,0,6,61,1,0,0,0,8,95,1,0,0,0,10,97,1,0,0,0,12,109,1,0,0,
-		0,14,114,1,0,0,0,16,120,1,0,0,0,18,124,1,0,0,0,20,134,1,0,0,0,22,144,1,
-		0,0,0,24,150,1,0,0,0,26,158,1,0,0,0,28,202,1,0,0,0,30,239,1,0,0,0,32,249,
-		1,0,0,0,34,35,3,2,1,0,35,36,5,0,0,1,36,1,1,0,0,0,37,40,3,4,2,0,38,40,3,
-		18,9,0,39,37,1,0,0,0,39,38,1,0,0,0,40,43,1,0,0,0,41,39,1,0,0,0,41,42,1,
-		0,0,0,42,48,1,0,0,0,43,41,1,0,0,0,44,45,5,9,0,0,45,46,3,28,14,0,46,47,
-		5,38,0,0,47,49,1,0,0,0,48,44,1,0,0,0,48,49,1,0,0,0,49,3,1,0,0,0,50,51,
-		3,6,3,0,51,52,5,38,0,0,52,60,1,0,0,0,53,54,3,8,4,0,54,55,5,38,0,0,55,60,
-		1,0,0,0,56,60,3,10,5,0,57,60,3,20,10,0,58,60,3,22,11,0,59,50,1,0,0,0,59,
-		53,1,0,0,0,59,56,1,0,0,0,59,57,1,0,0,0,59,58,1,0,0,0,60,5,1,0,0,0,61,63,
-		5,45,0,0,62,64,3,32,16,0,63,62,1,0,0,0,63,64,1,0,0,0,64,65,1,0,0,0,65,
-		66,5,39,0,0,66,67,3,28,14,0,67,7,1,0,0,0,68,69,5,45,0,0,69,71,5,36,0,0,
-		70,72,3,26,13,0,71,70,1,0,0,0,71,72,1,0,0,0,72,73,1,0,0,0,73,96,5,37,0,
-		0,74,75,5,1,0,0,75,77,5,36,0,0,76,78,3,28,14,0,77,76,1,0,0,0,77,78,1,0,
-		0,0,78,79,1,0,0,0,79,96,5,37,0,0,80,81,5,2,0,0,81,82,5,36,0,0,82,83,3,
-		28,14,0,83,84,5,37,0,0,84,96,1,0,0,0,85,86,5,4,0,0,86,87,5,36,0,0,87,88,
-		3,28,14,0,88,89,5,37,0,0,89,96,1,0,0,0,90,91,5,5,0,0,91,92,5,36,0,0,92,
-		93,3,28,14,0,93,94,5,37,0,0,94,96,1,0,0,0,95,68,1,0,0,0,95,74,1,0,0,0,
-		95,80,1,0,0,0,95,85,1,0,0,0,95,90,1,0,0,0,96,9,1,0,0,0,97,101,3,12,6,0,
-		98,100,3,14,7,0,99,98,1,0,0,0,100,103,1,0,0,0,101,99,1,0,0,0,101,102,1,
-		0,0,0,102,105,1,0,0,0,103,101,1,0,0,0,104,106,3,16,8,0,105,104,1,0,0,0,
-		105,106,1,0,0,0,106,107,1,0,0,0,107,108,5,14,0,0,108,11,1,0,0,0,109,110,
-		5,7,0,0,110,111,3,28,14,0,111,112,5,13,0,0,112,113,3,2,1,0,113,13,1,0,
-		0,0,114,115,5,8,0,0,115,116,5,7,0,0,116,117,3,28,14,0,117,118,5,13,0,0,
-		118,119,3,2,1,0,119,15,1,0,0,0,120,121,5,8,0,0,121,122,5,13,0,0,122,123,
-		3,2,1,0,123,17,1,0,0,0,124,125,5,6,0,0,125,126,5,45,0,0,126,128,5,36,0,
-		0,127,129,3,24,12,0,128,127,1,0,0,0,128,129,1,0,0,0,129,130,1,0,0,0,130,
-		131,5,37,0,0,131,132,3,2,1,0,132,133,5,14,0,0,133,19,1,0,0,0,134,135,5,
-		10,0,0,135,136,5,45,0,0,136,137,5,39,0,0,137,138,3,28,14,0,138,139,5,12,
-		0,0,139,140,3,28,14,0,140,141,5,13,0,0,141,142,3,2,1,0,142,143,5,14,0,
-		0,143,21,1,0,0,0,144,145,5,11,0,0,145,146,3,28,14,0,146,147,5,13,0,0,147,
-		148,3,2,1,0,148,149,5,14,0,0,149,23,1,0,0,0,150,155,5,45,0,0,151,152,5,
-		40,0,0,152,154,5,45,0,0,153,151,1,0,0,0,154,157,1,0,0,0,155,153,1,0,0,
-		0,155,156,1,0,0,0,156,25,1,0,0,0,157,155,1,0,0,0,158,163,3,28,14,0,159,
-		160,5,40,0,0,160,162,3,28,14,0,161,159,1,0,0,0,162,165,1,0,0,0,163,161,
-		1,0,0,0,163,164,1,0,0,0,164,27,1,0,0,0,165,163,1,0,0,0,166,167,6,14,-1,
-		0,167,168,5,28,0,0,168,203,3,28,14,20,169,170,5,24,0,0,170,203,3,28,14,
-		19,171,203,5,44,0,0,172,203,5,43,0,0,173,203,5,16,0,0,174,176,3,8,4,0,
-		175,177,3,32,16,0,176,175,1,0,0,0,176,177,1,0,0,0,177,203,1,0,0,0,178,
-		180,3,30,15,0,179,181,3,32,16,0,180,179,1,0,0,0,180,181,1,0,0,0,181,203,
-		1,0,0,0,182,184,5,45,0,0,183,185,3,32,16,0,184,183,1,0,0,0,184,185,1,0,
-		0,0,185,203,1,0,0,0,186,188,5,46,0,0,187,189,3,32,16,0,188,187,1,0,0,0,
-		188,189,1,0,0,0,189,203,1,0,0,0,190,191,5,36,0,0,191,192,3,28,14,0,192,
-		194,5,37,0,0,193,195,3,32,16,0,194,193,1,0,0,0,194,195,1,0,0,0,195,203,
-		1,0,0,0,196,197,5,3,0,0,197,199,5,36,0,0,198,200,5,46,0,0,199,198,1,0,
-		0,0,199,200,1,0,0,0,200,201,1,0,0,0,201,203,5,37,0,0,202,166,1,0,0,0,202,
-		169,1,0,0,0,202,171,1,0,0,0,202,172,1,0,0,0,202,173,1,0,0,0,202,174,1,
-		0,0,0,202,178,1,0,0,0,202,182,1,0,0,0,202,186,1,0,0,0,202,190,1,0,0,0,
-		202,196,1,0,0,0,203,236,1,0,0,0,204,205,10,18,0,0,205,206,5,23,0,0,206,
-		235,3,28,14,18,207,208,10,17,0,0,208,209,7,0,0,0,209,235,3,28,14,18,210,
-		211,10,16,0,0,211,212,7,1,0,0,212,235,3,28,14,17,213,214,10,15,0,0,214,
-		215,7,2,0,0,215,235,3,28,14,16,216,217,10,14,0,0,217,218,7,3,0,0,218,235,
-		3,28,14,15,219,220,10,13,0,0,220,221,5,18,0,0,221,235,3,28,14,14,222,223,
-		10,12,0,0,223,224,5,17,0,0,224,235,3,28,14,13,225,226,10,11,0,0,226,227,
-		5,41,0,0,227,228,3,28,14,0,228,229,5,42,0,0,229,230,3,28,14,12,230,235,
-		1,0,0,0,231,232,10,10,0,0,232,233,5,15,0,0,233,235,3,28,14,11,234,204,
-		1,0,0,0,234,207,1,0,0,0,234,210,1,0,0,0,234,213,1,0,0,0,234,216,1,0,0,
-		0,234,219,1,0,0,0,234,222,1,0,0,0,234,225,1,0,0,0,234,231,1,0,0,0,235,
-		238,1,0,0,0,236,234,1,0,0,0,236,237,1,0,0,0,237,29,1,0,0,0,238,236,1,0,
-		0,0,239,241,5,34,0,0,240,242,3,26,13,0,241,240,1,0,0,0,241,242,1,0,0,0,
-		242,243,1,0,0,0,243,244,5,35,0,0,244,31,1,0,0,0,245,246,5,34,0,0,246,247,
-		3,28,14,0,247,248,5,35,0,0,248,250,1,0,0,0,249,245,1,0,0,0,250,251,1,0,
-		0,0,251,249,1,0,0,0,251,252,1,0,0,0,252,33,1,0,0,0,24,39,41,48,59,63,71,
-		77,95,101,105,128,155,163,176,180,184,188,194,199,202,234,236,241,251
+		4,1,13,66,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,1,0,
+		4,0,16,8,0,11,0,12,0,17,1,1,1,1,3,1,22,8,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,
+		1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,39,8,2,1,3,1,3,1,3,1,3,1,3,1,4,1,4,
+		1,4,1,4,5,4,50,8,4,10,4,12,4,53,9,4,1,5,1,5,1,5,1,5,5,5,59,8,5,10,5,12,
+		5,62,9,5,1,6,1,6,1,6,0,0,7,0,2,4,6,8,10,12,0,1,1,0,6,9,66,0,15,1,0,0,0,
+		2,21,1,0,0,0,4,38,1,0,0,0,6,40,1,0,0,0,8,45,1,0,0,0,10,54,1,0,0,0,12,63,
+		1,0,0,0,14,16,3,2,1,0,15,14,1,0,0,0,16,17,1,0,0,0,17,15,1,0,0,0,17,18,
+		1,0,0,0,18,1,1,0,0,0,19,22,3,4,2,0,20,22,3,6,3,0,21,19,1,0,0,0,21,20,1,
+		0,0,0,22,3,1,0,0,0,23,24,5,3,0,0,24,25,5,6,0,0,25,26,5,1,0,0,26,27,5,7,
+		0,0,27,39,5,2,0,0,28,29,5,4,0,0,29,30,5,6,0,0,30,31,5,1,0,0,31,32,5,8,
+		0,0,32,39,5,2,0,0,33,34,5,5,0,0,34,35,5,6,0,0,35,36,5,1,0,0,36,37,5,9,
+		0,0,37,39,5,2,0,0,38,23,1,0,0,0,38,28,1,0,0,0,38,33,1,0,0,0,39,5,1,0,0,
+		0,40,41,5,6,0,0,41,42,5,1,0,0,42,43,3,8,4,0,43,44,5,2,0,0,44,7,1,0,0,0,
+		45,51,3,10,5,0,46,50,5,10,0,0,47,48,5,11,0,0,48,50,3,10,5,0,49,46,1,0,
+		0,0,49,47,1,0,0,0,50,53,1,0,0,0,51,49,1,0,0,0,51,52,1,0,0,0,52,9,1,0,0,
+		0,53,51,1,0,0,0,54,60,3,12,6,0,55,59,5,12,0,0,56,57,5,13,0,0,57,59,3,12,
+		6,0,58,55,1,0,0,0,58,56,1,0,0,0,59,62,1,0,0,0,60,58,1,0,0,0,60,61,1,0,
+		0,0,61,11,1,0,0,0,62,60,1,0,0,0,63,64,7,0,0,0,64,13,1,0,0,0,7,17,21,38,
+		49,51,58,60
 	};
 
 	public static readonly ATN _ATN =

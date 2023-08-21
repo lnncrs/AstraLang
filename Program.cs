@@ -9,33 +9,7 @@ namespace Astra;
 
 class Program
 {
-      static string ExprParseMethod(string input)
-      {
-            ICharStream stream = CharStreams.fromString(input);
-            ITokenSource lexer = new ExprLexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            ExprParser parser = new ExprParser(tokens);
-            parser.BuildParseTree = true;
-            IParseTree tree = parser.prog();
-            return tree.ToStringTree(parser);
-      }
-
       static string AstraParseMethod(string input)
-      {
-            ICharStream stream = CharStreams.fromString(input);
-            ITokenSource lexer = new TLLexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            AstraParser parser = new AstraParser(tokens);
-            parser.BuildParseTree = true;
-            IParseTree tree = parser.parse();
-
-            AstraPrinter printer = new AstraPrinter();
-            ParseTreeWalker.Default.Walk(printer, tree);
-
-            return tree.ToStringTree(parser);
-      }
-
-      static string TLParseMethod(string input)
       {
             ICharStream stream = CharStreams.fromString(input);
             ITokenSource lexer = new TLLexer(stream);
@@ -69,7 +43,7 @@ class Program
 
             if (string.IsNullOrEmpty(fileOutputPath))
             {
-                  fileOutputPath = System.IO.Path.ChangeExtension(fileInputPath, ".out");
+                  fileOutputPath = System.IO.Path.ChangeExtension(fileInputPath, ".c");
             }
 
             Console.WriteLine($"output: {fileOutputPath}");
@@ -78,24 +52,19 @@ class Program
 
             Console.WriteLine($"tree  : {fileOutputTreePath}");
 
-            string fileOutputCLangPath = System.IO.Path.ChangeExtension(fileInputPath, ".c");
-
-            Console.WriteLine($"clang : {fileOutputCLangPath}");
-
             // load the source file
             string source = System.IO.File.ReadAllText(fileInputPath);
 
-            // string tree = ExprParseMethod(source);
-            // string tree = TLParseMethod(source);
             string tree = AstraParseMethod(source);
 
             // write to output file
-            using System.IO.StreamWriter fileOutput = new System.IO.StreamWriter(fileOutputPath);
-                  fileOutput.WriteLine(tree);
+            using System.IO.StreamWriter fileTree = new System.IO.StreamWriter(fileOutputTreePath);
+            fileTree.WriteLine(tree);
 
             // write to output file
-            using System.IO.StreamWriter fileTree = new System.IO.StreamWriter(fileOutputTreePath);
-                  fileTree.WriteLine(tree);
+            using System.IO.StreamWriter fileOutput = new System.IO.StreamWriter(fileOutputPath);
+            fileOutput.WriteLine(string.Empty);
+
       }
 
       static async Task<int> Main(string[] args)

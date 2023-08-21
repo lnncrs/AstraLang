@@ -1,10 +1,10 @@
-# Astra Lang - Linguagem experimental para produção de código compatível os padrões de "Safety-Critical Code" da NASA/JPL
+# Astra Lang - Linguagem experimental parcialmente implementada para produção de código compatível os padrões de "Safety-Critical Code" do JPL
 
-**Astra Lang - Experimental language for generating code compliant with NASA/JPL's Safety-Critical Code standards.**
+**Astra Lang - Experimental language for generating code compliant with JPL's Safety-Critical Code standards.**
 
 ![UFABC Logo](assets/logotipo-ufabc-extenso.png)
 
-Universidade Federal do ABC - Bacharelado em Ciência e Tecnologia Projeto Dirigido 2023/Q1
+Universidade Federal do ABC - Bacharelado em Ciência e Tecnologia Compiladores 2023/Q2
 
 Lenin Cristi
 
@@ -32,11 +32,22 @@ This document is based on the "C Style Guide" (SEL-94-003). It contains recommen
 
 ## Requisitos
 
-O compilador está implementado em C# utilizando o .NET 7 e Antlr
+O compilador está parcialmente implementado em C# utilizando .NET 7 e Antlr
 
 Lista de software recomendado (plataformas Windows ou Linux)
 
-[Git](https://git-scm.com/downloads)
+### Git
+
+[Git (Windows)](https://git-scm.com/downloads)
+
+[Git (Linux, Red Hat based)](https://git-scm.com/)
+
+```bash
+sudo yum update
+sudo yum install git
+```
+
+### Frameworks
 
 [.NET SDK](https://dotnet.microsoft.com/pt-br/download)
 
@@ -44,9 +55,39 @@ Lista de software recomendado (plataformas Windows ou Linux)
 
 Porque? O Antlr na versão utilizada roda seu tooling no Java 11
 
+> Altere sua variável JAVA_HOME para o Java 11 durante o build
+
+### IDE's
+
 [VS Code](https://code.visualstudio.com/)
 
 [Visual Studio (alternativa ao VS Code, pode ser utilizado o community)](https://visualstudio.microsoft.com/pt-br/vs/community/)
+
+### Compiladores
+
+[GCC via MSYS2 (Windows)](https://www.msys2.org/)
+
+Após a instalação usual do MSYS2, execute o seguinte comando no terminal do MSYS2
+
+```bash
+pacman -S mingw-w64-ucrt-x86_64-gcc
+```
+
+> Adicione o caminho dos binários MSYS2 a PATH do seu ambiente
+
+[GCC (Linux)](https://gcc.gnu.org/)
+
+```bash
+sudo yum update
+sudo yum install gcc gcc-c++
+```
+
+Verifique a instalação utilizando
+
+```bash
+$ gcc --version
+```
+
 
 ### Extensões recomendadas do VS Code para o projeto
 
@@ -121,9 +162,54 @@ https://github.com/professorisidro/TypeExpression
 
 https://github.com/professorisidro/IsiLanguageEmbriao
 
+### Referências do estilo
+
+Resumo
+https://betterprogramming.pub/the-power-of-10-nasas-rules-for-coding-43ae1764f73d
+
+C
+https://ntrs.nasa.gov/citations/19950022400
+
+C++
+https://ntrs.nasa.gov/citations/20080039927
+
+Framework & Tooling baseado neste estilo
+https://nasa.github.io/fprime/UsersGuide/dev/code-style.html
+
+### Referências do Antlr utilizadas
+
+Antlr
+https://www.antlr.org/
+
+Antlr v4
+https://github.com/antlr/antlr4
+
+Getting Started with ANTLR v4
+https://github.com/antlr/antlr4/blob/master/doc/getting-started.md
+
+Antlr C# Target
 https://github.com/antlr/antlr4/blob/master/doc/csharp-target.md
 
+Examples of the book "The Definitive ANTLR 4 Reference" by Terence Parr translated in C#
+https://github.com/Philippe-Laval/tpantlr2
+
+Examples of the book "Language Implementation Patterns" by Terence Parr translated in C# and Antrl4
+https://github.com/Philippe-Laval/tpdsl
+
+C# target for ANTLR 4
+https://github.com/antlr/antlr4/tree/master/runtime/CSharp/src
+
+### Referência de implementação de gramática
+
+Templates de linguagem
+https://github.com/kaby76/Antlr4Templates/tree/main
+
+> Apesar do objetivo do repositório ser o de templates Antlr para o dotnet, existem diversos arquivos de gramática uteis como referência
+
+Tiny Language for ANTLR 4
 https://github.com/bkiers/tiny-language-antlr4
+
+> Uma linguagem de instruções reduzidas completamente implementada
 
 ___
 

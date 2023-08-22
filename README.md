@@ -163,7 +163,23 @@ dotnet run
 
 - Uso do Antlr4 implementado com métodos de visitor
 
+## Uso
 
+O programa aceita uma quantidade reduzida de parâmetros como segue
+
+```bash
+Description:
+  AstraLang version 1.0.0.0 (Win32NT 10.0.22621.0 64-bit)
+
+Usage:
+  astra [options]
+
+Options:
+  --input <input>    Source file path [default: C:\Users\lenin\OneDrive\Projects\ufabc\ufabc-co-astralang\astra\bin\Debug\net7.0\samples\helloworld.astra]
+  --output <output>  Source file path
+  --version          Show version information
+  -?, -h, --help     Show help and usage information
+```
 
 ## Referências
 

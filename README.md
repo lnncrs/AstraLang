@@ -95,7 +95,7 @@ $ gcc --version
 
 [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
 
-Extensões opcionais do VS Code para o projeto
+### Extensões opcionais do VS Code para o projeto
 
 [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
 
@@ -149,6 +149,17 @@ Para rodar o projeto
 dotnet run
 ```
 
+Para passar parâmetros
+
+```bash
+dotnet run -- {lista de parâmetros}
+```
+
+```bash
+astra {lista de parâmetros}
+```
+
+
 ## Requisitos funcionais
 
 - Uso da plataforma open source .NET mais recente com linguagem C#, sem código intermediário em linguagens paralelas na fase de tooling
@@ -175,7 +186,7 @@ Usage:
   astra [options]
 
 Options:
-  --input <input>    Source file path [default: C:\Users\lenin\OneDrive\Projects\ufabc\ufabc-co-astralang\astra\bin\Debug\net7.0\samples\helloworld.astra]
+  --input <input>    Source file path [default:samples\helloworld.astra]
   --output <output>  Source file path
   --version          Show version information
   -?, -h, --help     Show help and usage information

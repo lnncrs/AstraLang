@@ -36,23 +36,30 @@ public partial class AstraParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		T__0=1, T__1=2, INT=3, DOUBLE=4, STRING=5, ID=6, INTVAL=7, DOUBLEVAL=8, 
-		STRINGVAL=9, ADD=10, SUB=11, MUL=12, DIV=13;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
+		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
+		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
+		ID=25, INT=26, DOUBLE=27, STRING=28, WS=29;
 	public const int
-		RULE_program = 0, RULE_statement = 1, RULE_declaration = 2, RULE_expression = 3, 
-		RULE_additive_expression = 4, RULE_multiplicative_expression = 5, RULE_primary_expression = 6;
+		RULE_program = 0, RULE_statement = 1, RULE_assignment = 2, RULE_ifStatement = 3, 
+		RULE_whileStatement = 4, RULE_doWhileStatement = 5, RULE_inputStatement = 6, 
+		RULE_outputStatement = 7, RULE_expressionStatement = 8, RULE_block = 9, 
+		RULE_expression = 10;
 	public static readonly string[] ruleNames = {
-		"program", "statement", "declaration", "expression", "additive_expression", 
-		"multiplicative_expression", "primary_expression"
+		"program", "statement", "assignment", "ifStatement", "whileStatement", 
+		"doWhileStatement", "inputStatement", "outputStatement", "expressionStatement", 
+		"block", "expression"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'='", "';'", "'int'", "'double'", "'string'", null, null, null, 
-		null, "'+'", "'-'", "'*'", "'/'"
+		null, "'='", "';'", "'if'", "'('", "')'", "'else'", "'while'", "'do'", 
+		"'input'", "'print'", "'println'", "'{'", "'}'", "'+'", "'-'", "'*'", 
+		"'/'", "'%'", "'>'", "'>='", "'<'", "'<='", "'=='", "'!='"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, null, null, "INT", "DOUBLE", "STRING", "ID", "INTVAL", "DOUBLEVAL", 
-		"STRINGVAL", "ADD", "SUB", "MUL", "DIV"
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		null, "ID", "INT", "DOUBLE", "STRING", "WS"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -118,20 +125,20 @@ public partial class AstraParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 15;
+			State = 25;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			do {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 503320472L) != 0)) {
 				{
 				{
-				State = 14;
+				State = 22;
 				statement();
 				}
 				}
-				State = 17;
+				State = 27;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 120L) != 0) );
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -146,11 +153,26 @@ public partial class AstraParser : Parser {
 	}
 
 	public partial class StatementContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public DeclarationContext declaration() {
-			return GetRuleContext<DeclarationContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public AssignmentContext assignment() {
+			return GetRuleContext<AssignmentContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
-			return GetRuleContext<ExpressionContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public IfStatementContext ifStatement() {
+			return GetRuleContext<IfStatementContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public WhileStatementContext whileStatement() {
+			return GetRuleContext<WhileStatementContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public DoWhileStatementContext doWhileStatement() {
+			return GetRuleContext<DoWhileStatementContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionStatementContext expressionStatement() {
+			return GetRuleContext<ExpressionStatementContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public InputStatementContext inputStatement() {
+			return GetRuleContext<InputStatementContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public OutputStatementContext outputStatement() {
+			return GetRuleContext<OutputStatementContext>(0);
 		}
 		public StatementContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -174,120 +196,58 @@ public partial class AstraParser : Parser {
 		StatementContext _localctx = new StatementContext(Context, State);
 		EnterRule(_localctx, 2, RULE_statement);
 		try {
-			State = 21;
+			State = 35;
 			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case INT:
-			case DOUBLE:
-			case STRING:
+			switch ( Interpreter.AdaptivePredict(TokenStream,1,Context) ) {
+			case 1:
 				EnterOuterAlt(_localctx, 1);
-				{
-				State = 19;
-				declaration();
-				}
-				break;
-			case ID:
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 20;
-				expression();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class DeclarationContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INT() { return GetToken(AstraParser.INT, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(AstraParser.ID, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTVAL() { return GetToken(AstraParser.INTVAL, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DOUBLE() { return GetToken(AstraParser.DOUBLE, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DOUBLEVAL() { return GetToken(AstraParser.DOUBLEVAL, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRING() { return GetToken(AstraParser.STRING, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRINGVAL() { return GetToken(AstraParser.STRINGVAL, 0); }
-		public DeclarationContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_declaration; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitDeclaration(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public DeclarationContext declaration() {
-		DeclarationContext _localctx = new DeclarationContext(Context, State);
-		EnterRule(_localctx, 4, RULE_declaration);
-		try {
-			State = 38;
-			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case INT:
-				EnterOuterAlt(_localctx, 1);
-				{
-				State = 23;
-				Match(INT);
-				State = 24;
-				Match(ID);
-				State = 25;
-				Match(T__0);
-				State = 26;
-				Match(INTVAL);
-				State = 27;
-				Match(T__1);
-				}
-				break;
-			case DOUBLE:
-				EnterOuterAlt(_localctx, 2);
 				{
 				State = 28;
-				Match(DOUBLE);
-				State = 29;
-				Match(ID);
-				State = 30;
-				Match(T__0);
-				State = 31;
-				Match(DOUBLEVAL);
-				State = 32;
-				Match(T__1);
+				assignment();
 				}
 				break;
-			case STRING:
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 29;
+				ifStatement();
+				}
+				break;
+			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 33;
-				Match(STRING);
-				State = 34;
-				Match(ID);
-				State = 35;
-				Match(T__0);
-				State = 36;
-				Match(STRINGVAL);
-				State = 37;
-				Match(T__1);
+				State = 30;
+				whileStatement();
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
+			case 4:
+				EnterOuterAlt(_localctx, 4);
+				{
+				State = 31;
+				doWhileStatement();
+				}
+				break;
+			case 5:
+				EnterOuterAlt(_localctx, 5);
+				{
+				State = 32;
+				expressionStatement();
+				}
+				break;
+			case 6:
+				EnterOuterAlt(_localctx, 6);
+				{
+				State = 33;
+				inputStatement();
+				}
+				break;
+			case 7:
+				EnterOuterAlt(_localctx, 7);
+				{
+				State = 34;
+				outputStatement();
+				}
+				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -301,42 +261,42 @@ public partial class AstraParser : Parser {
 		return _localctx;
 	}
 
-	public partial class ExpressionContext : ParserRuleContext {
+	public partial class AssignmentContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(AstraParser.ID, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public Additive_expressionContext additive_expression() {
-			return GetRuleContext<Additive_expressionContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
 		}
-		public ExpressionContext(ParserRuleContext parent, int invokingState)
+		public AssignmentContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_expression; } }
+		public override int RuleIndex { get { return RULE_assignment; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterExpression(this);
+			if (typedListener != null) typedListener.EnterAssignment(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitExpression(this);
+			if (typedListener != null) typedListener.ExitAssignment(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public ExpressionContext expression() {
-		ExpressionContext _localctx = new ExpressionContext(Context, State);
-		EnterRule(_localctx, 6, RULE_expression);
+	public AssignmentContext assignment() {
+		AssignmentContext _localctx = new AssignmentContext(Context, State);
+		EnterRule(_localctx, 4, RULE_assignment);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 40;
+			State = 37;
 			Match(ID);
-			State = 41;
+			State = 38;
 			Match(T__0);
-			State = 42;
-			additive_expression();
-			State = 43;
+			State = 39;
+			expression(0);
+			State = 40;
 			Match(T__1);
 			}
 		}
@@ -351,163 +311,117 @@ public partial class AstraParser : Parser {
 		return _localctx;
 	}
 
-	public partial class Additive_expressionContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public Multiplicative_expressionContext[] multiplicative_expression() {
-			return GetRuleContexts<Multiplicative_expressionContext>();
+	public partial class IfStatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public Multiplicative_expressionContext multiplicative_expression(int i) {
-			return GetRuleContext<Multiplicative_expressionContext>(i);
+		[System.Diagnostics.DebuggerNonUserCode] public BlockContext[] block() {
+			return GetRuleContexts<BlockContext>();
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] ADD() { return GetTokens(AstraParser.ADD); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ADD(int i) {
-			return GetToken(AstraParser.ADD, i);
+		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block(int i) {
+			return GetRuleContext<BlockContext>(i);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] SUB() { return GetTokens(AstraParser.SUB); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SUB(int i) {
-			return GetToken(AstraParser.SUB, i);
-		}
-		public Additive_expressionContext(ParserRuleContext parent, int invokingState)
+		public IfStatementContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_additive_expression; } }
+		public override int RuleIndex { get { return RULE_ifStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterAdditive_expression(this);
+			if (typedListener != null) typedListener.EnterIfStatement(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitAdditive_expression(this);
+			if (typedListener != null) typedListener.ExitIfStatement(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public Additive_expressionContext additive_expression() {
-		Additive_expressionContext _localctx = new Additive_expressionContext(Context, State);
-		EnterRule(_localctx, 8, RULE_additive_expression);
+	public IfStatementContext ifStatement() {
+		IfStatementContext _localctx = new IfStatementContext(Context, State);
+		EnterRule(_localctx, 6, RULE_ifStatement);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
+			State = 42;
+			Match(T__2);
+			State = 43;
+			Match(T__3);
+			State = 44;
+			expression(0);
 			State = 45;
-			multiplicative_expression();
+			Match(T__4);
+			State = 46;
+			block();
+			State = 49;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			if (_la==T__5) {
+				{
+				State = 47;
+				Match(T__5);
+				State = 48;
+				block();
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class WhileStatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
+			return GetRuleContext<BlockContext>(0);
+		}
+		public WhileStatementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_whileStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterWhileStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitWhileStatement(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public WhileStatementContext whileStatement() {
+		WhileStatementContext _localctx = new WhileStatementContext(Context, State);
+		EnterRule(_localctx, 8, RULE_whileStatement);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
 			State = 51;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==ADD || _la==SUB) {
-				{
-				State = 49;
-				ErrorHandler.Sync(this);
-				switch (TokenStream.LA(1)) {
-				case ADD:
-					{
-					State = 46;
-					Match(ADD);
-					}
-					break;
-				case SUB:
-					{
-					State = 47;
-					Match(SUB);
-					State = 48;
-					multiplicative_expression();
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
-				}
-				}
-				State = 53;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Multiplicative_expressionContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public Primary_expressionContext[] primary_expression() {
-			return GetRuleContexts<Primary_expressionContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public Primary_expressionContext primary_expression(int i) {
-			return GetRuleContext<Primary_expressionContext>(i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] MUL() { return GetTokens(AstraParser.MUL); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode MUL(int i) {
-			return GetToken(AstraParser.MUL, i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] DIV() { return GetTokens(AstraParser.DIV); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DIV(int i) {
-			return GetToken(AstraParser.DIV, i);
-		}
-		public Multiplicative_expressionContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_multiplicative_expression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterMultiplicative_expression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitMultiplicative_expression(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Multiplicative_expressionContext multiplicative_expression() {
-		Multiplicative_expressionContext _localctx = new Multiplicative_expressionContext(Context, State);
-		EnterRule(_localctx, 10, RULE_multiplicative_expression);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
+			Match(T__6);
+			State = 52;
+			Match(T__3);
+			State = 53;
+			expression(0);
 			State = 54;
-			primary_expression();
-			State = 60;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==MUL || _la==DIV) {
-				{
-				State = 58;
-				ErrorHandler.Sync(this);
-				switch (TokenStream.LA(1)) {
-				case MUL:
-					{
-					State = 55;
-					Match(MUL);
-					}
-					break;
-				case DIV:
-					{
-					State = 56;
-					Match(DIV);
-					State = 57;
-					primary_expression();
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
-				}
-				}
-				State = 62;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
+			Match(T__4);
+			State = 55;
+			block();
 			}
 		}
 		catch (RecognitionException re) {
@@ -521,45 +435,51 @@ public partial class AstraParser : Parser {
 		return _localctx;
 	}
 
-	public partial class Primary_expressionContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTVAL() { return GetToken(AstraParser.INTVAL, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DOUBLEVAL() { return GetToken(AstraParser.DOUBLEVAL, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRINGVAL() { return GetToken(AstraParser.STRINGVAL, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(AstraParser.ID, 0); }
-		public Primary_expressionContext(ParserRuleContext parent, int invokingState)
+	public partial class DoWhileStatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public BlockContext block() {
+			return GetRuleContext<BlockContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		public DoWhileStatementContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_primary_expression; } }
+		public override int RuleIndex { get { return RULE_doWhileStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.EnterPrimary_expression(this);
+			if (typedListener != null) typedListener.EnterDoWhileStatement(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IAstraListener typedListener = listener as IAstraListener;
-			if (typedListener != null) typedListener.ExitPrimary_expression(this);
+			if (typedListener != null) typedListener.ExitDoWhileStatement(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public Primary_expressionContext primary_expression() {
-		Primary_expressionContext _localctx = new Primary_expressionContext(Context, State);
-		EnterRule(_localctx, 12, RULE_primary_expression);
-		int _la;
+	public DoWhileStatementContext doWhileStatement() {
+		DoWhileStatementContext _localctx = new DoWhileStatementContext(Context, State);
+		EnterRule(_localctx, 10, RULE_doWhileStatement);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
+			State = 57;
+			Match(T__7);
+			State = 58;
+			block();
+			State = 59;
+			Match(T__6);
+			State = 60;
+			Match(T__3);
+			State = 61;
+			expression(0);
+			State = 62;
+			Match(T__4);
 			State = 63;
-			_la = TokenStream.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 960L) != 0)) ) {
-			ErrorHandler.RecoverInline(this);
-			}
-			else {
-				ErrorHandler.ReportMatch(this);
-			    Consume();
-			}
+			Match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -571,28 +491,589 @@ public partial class AstraParser : Parser {
 			ExitRule();
 		}
 		return _localctx;
+	}
+
+	public partial class InputStatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(AstraParser.ID, 0); }
+		public InputStatementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_inputStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterInputStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitInputStatement(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public InputStatementContext inputStatement() {
+		InputStatementContext _localctx = new InputStatementContext(Context, State);
+		EnterRule(_localctx, 12, RULE_inputStatement);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 65;
+			Match(T__8);
+			State = 66;
+			Match(ID);
+			State = 67;
+			Match(T__1);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class OutputStatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		public OutputStatementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_outputStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterOutputStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitOutputStatement(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public OutputStatementContext outputStatement() {
+		OutputStatementContext _localctx = new OutputStatementContext(Context, State);
+		EnterRule(_localctx, 14, RULE_outputStatement);
+		try {
+			State = 77;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case T__9:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 69;
+				Match(T__9);
+				State = 70;
+				expression(0);
+				State = 71;
+				Match(T__1);
+				}
+				break;
+			case T__10:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 73;
+				Match(T__10);
+				State = 74;
+				expression(0);
+				State = 75;
+				Match(T__1);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ExpressionStatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		public ExpressionStatementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_expressionStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterExpressionStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitExpressionStatement(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ExpressionStatementContext expressionStatement() {
+		ExpressionStatementContext _localctx = new ExpressionStatementContext(Context, State);
+		EnterRule(_localctx, 16, RULE_expressionStatement);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 79;
+			expression(0);
+			State = 80;
+			Match(T__1);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class BlockContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public StatementContext[] statement() {
+			return GetRuleContexts<StatementContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public StatementContext statement(int i) {
+			return GetRuleContext<StatementContext>(i);
+		}
+		public BlockContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_block; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterBlock(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitBlock(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public BlockContext block() {
+		BlockContext _localctx = new BlockContext(Context, State);
+		EnterRule(_localctx, 18, RULE_block);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 82;
+			Match(T__11);
+			State = 86;
+			ErrorHandler.Sync(this);
+			_la = TokenStream.LA(1);
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 503320472L) != 0)) {
+				{
+				{
+				State = 83;
+				statement();
+				}
+				}
+				State = 88;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			}
+			State = 89;
+			Match(T__12);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class ExpressionContext : ParserRuleContext {
+		public ExpressionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_expression; } }
+	 
+		public ExpressionContext() { }
+		public virtual void CopyFrom(ExpressionContext context) {
+			base.CopyFrom(context);
+		}
+	}
+	public partial class StringLiteralContext : ExpressionContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRING() { return GetToken(AstraParser.STRING, 0); }
+		public StringLiteralContext(ExpressionContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterStringLiteral(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitStringLiteral(this);
+		}
+	}
+	public partial class AdditiveExpressionContext : ExpressionContext {
+		public IToken op;
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		public AdditiveExpressionContext(ExpressionContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterAdditiveExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitAdditiveExpression(this);
+		}
+	}
+	public partial class RelationalExpressionContext : ExpressionContext {
+		public IToken op;
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		public RelationalExpressionContext(ExpressionContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterRelationalExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitRelationalExpression(this);
+		}
+	}
+	public partial class IntLiteralContext : ExpressionContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INT() { return GetToken(AstraParser.INT, 0); }
+		public IntLiteralContext(ExpressionContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterIntLiteral(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitIntLiteral(this);
+		}
+	}
+	public partial class DoubleLiteralContext : ExpressionContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DOUBLE() { return GetToken(AstraParser.DOUBLE, 0); }
+		public DoubleLiteralContext(ExpressionContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterDoubleLiteral(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitDoubleLiteral(this);
+		}
+	}
+	public partial class VariableContext : ExpressionContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(AstraParser.ID, 0); }
+		public VariableContext(ExpressionContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterVariable(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitVariable(this);
+		}
+	}
+	public partial class ParensExpressionContext : ExpressionContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		public ParensExpressionContext(ExpressionContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterParensExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitParensExpression(this);
+		}
+	}
+	public partial class MultiplicativeExpressionContext : ExpressionContext {
+		public IToken op;
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		public MultiplicativeExpressionContext(ExpressionContext context) { CopyFrom(context); }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.EnterMultiplicativeExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IAstraListener typedListener = listener as IAstraListener;
+			if (typedListener != null) typedListener.ExitMultiplicativeExpression(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ExpressionContext expression() {
+		return expression(0);
+	}
+
+	private ExpressionContext expression(int _p) {
+		ParserRuleContext _parentctx = Context;
+		int _parentState = State;
+		ExpressionContext _localctx = new ExpressionContext(Context, _parentState);
+		ExpressionContext _prevctx = _localctx;
+		int _startState = 20;
+		EnterRecursionRule(_localctx, 20, RULE_expression, _p);
+		int _la;
+		try {
+			int _alt;
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 100;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case T__3:
+				{
+				_localctx = new ParensExpressionContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+
+				State = 92;
+				Match(T__3);
+				State = 93;
+				expression(0);
+				State = 94;
+				Match(T__4);
+				}
+				break;
+			case INT:
+				{
+				_localctx = new IntLiteralContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 96;
+				Match(INT);
+				}
+				break;
+			case DOUBLE:
+				{
+				_localctx = new DoubleLiteralContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 97;
+				Match(DOUBLE);
+				}
+				break;
+			case STRING:
+				{
+				_localctx = new StringLiteralContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 98;
+				Match(STRING);
+				}
+				break;
+			case ID:
+				{
+				_localctx = new VariableContext(_localctx);
+				Context = _localctx;
+				_prevctx = _localctx;
+				State = 99;
+				Match(ID);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			Context.Stop = TokenStream.LT(-1);
+			State = 113;
+			ErrorHandler.Sync(this);
+			_alt = Interpreter.AdaptivePredict(TokenStream,7,Context);
+			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( ParseListeners!=null )
+						TriggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					State = 111;
+					ErrorHandler.Sync(this);
+					switch ( Interpreter.AdaptivePredict(TokenStream,6,Context) ) {
+					case 1:
+						{
+						_localctx = new AdditiveExpressionContext(new ExpressionContext(_parentctx, _parentState));
+						PushNewRecursionContext(_localctx, _startState, RULE_expression);
+						State = 102;
+						if (!(Precpred(Context, 7))) throw new FailedPredicateException(this, "Precpred(Context, 7)");
+						State = 103;
+						((AdditiveExpressionContext)_localctx).op = TokenStream.LT(1);
+						_la = TokenStream.LA(1);
+						if ( !(_la==T__13 || _la==T__14) ) {
+							((AdditiveExpressionContext)_localctx).op = ErrorHandler.RecoverInline(this);
+						}
+						else {
+							ErrorHandler.ReportMatch(this);
+						    Consume();
+						}
+						State = 104;
+						expression(8);
+						}
+						break;
+					case 2:
+						{
+						_localctx = new MultiplicativeExpressionContext(new ExpressionContext(_parentctx, _parentState));
+						PushNewRecursionContext(_localctx, _startState, RULE_expression);
+						State = 105;
+						if (!(Precpred(Context, 6))) throw new FailedPredicateException(this, "Precpred(Context, 6)");
+						State = 106;
+						((MultiplicativeExpressionContext)_localctx).op = TokenStream.LT(1);
+						_la = TokenStream.LA(1);
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 458752L) != 0)) ) {
+							((MultiplicativeExpressionContext)_localctx).op = ErrorHandler.RecoverInline(this);
+						}
+						else {
+							ErrorHandler.ReportMatch(this);
+						    Consume();
+						}
+						State = 107;
+						expression(7);
+						}
+						break;
+					case 3:
+						{
+						_localctx = new RelationalExpressionContext(new ExpressionContext(_parentctx, _parentState));
+						PushNewRecursionContext(_localctx, _startState, RULE_expression);
+						State = 108;
+						if (!(Precpred(Context, 5))) throw new FailedPredicateException(this, "Precpred(Context, 5)");
+						State = 109;
+						((RelationalExpressionContext)_localctx).op = TokenStream.LT(1);
+						_la = TokenStream.LA(1);
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 33030144L) != 0)) ) {
+							((RelationalExpressionContext)_localctx).op = ErrorHandler.RecoverInline(this);
+						}
+						else {
+							ErrorHandler.ReportMatch(this);
+						    Consume();
+						}
+						State = 110;
+						expression(6);
+						}
+						break;
+					}
+					} 
+				}
+				State = 115;
+				ErrorHandler.Sync(this);
+				_alt = Interpreter.AdaptivePredict(TokenStream,7,Context);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			UnrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	public override bool Sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+		switch (ruleIndex) {
+		case 10: return expression_sempred((ExpressionContext)_localctx, predIndex);
+		}
+		return true;
+	}
+	private bool expression_sempred(ExpressionContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 0: return Precpred(Context, 7);
+		case 1: return Precpred(Context, 6);
+		case 2: return Precpred(Context, 5);
+		}
+		return true;
 	}
 
 	private static int[] _serializedATN = {
-		4,1,13,66,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,1,0,
-		4,0,16,8,0,11,0,12,0,17,1,1,1,1,3,1,22,8,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,
-		1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,39,8,2,1,3,1,3,1,3,1,3,1,3,1,4,1,4,
-		1,4,1,4,5,4,50,8,4,10,4,12,4,53,9,4,1,5,1,5,1,5,1,5,5,5,59,8,5,10,5,12,
-		5,62,9,5,1,6,1,6,1,6,0,0,7,0,2,4,6,8,10,12,0,1,1,0,6,9,66,0,15,1,0,0,0,
-		2,21,1,0,0,0,4,38,1,0,0,0,6,40,1,0,0,0,8,45,1,0,0,0,10,54,1,0,0,0,12,63,
-		1,0,0,0,14,16,3,2,1,0,15,14,1,0,0,0,16,17,1,0,0,0,17,15,1,0,0,0,17,18,
-		1,0,0,0,18,1,1,0,0,0,19,22,3,4,2,0,20,22,3,6,3,0,21,19,1,0,0,0,21,20,1,
-		0,0,0,22,3,1,0,0,0,23,24,5,3,0,0,24,25,5,6,0,0,25,26,5,1,0,0,26,27,5,7,
-		0,0,27,39,5,2,0,0,28,29,5,4,0,0,29,30,5,6,0,0,30,31,5,1,0,0,31,32,5,8,
-		0,0,32,39,5,2,0,0,33,34,5,5,0,0,34,35,5,6,0,0,35,36,5,1,0,0,36,37,5,9,
-		0,0,37,39,5,2,0,0,38,23,1,0,0,0,38,28,1,0,0,0,38,33,1,0,0,0,39,5,1,0,0,
-		0,40,41,5,6,0,0,41,42,5,1,0,0,42,43,3,8,4,0,43,44,5,2,0,0,44,7,1,0,0,0,
-		45,51,3,10,5,0,46,50,5,10,0,0,47,48,5,11,0,0,48,50,3,10,5,0,49,46,1,0,
-		0,0,49,47,1,0,0,0,50,53,1,0,0,0,51,49,1,0,0,0,51,52,1,0,0,0,52,9,1,0,0,
-		0,53,51,1,0,0,0,54,60,3,12,6,0,55,59,5,12,0,0,56,57,5,13,0,0,57,59,3,12,
-		6,0,58,55,1,0,0,0,58,56,1,0,0,0,59,62,1,0,0,0,60,58,1,0,0,0,60,61,1,0,
-		0,0,61,11,1,0,0,0,62,60,1,0,0,0,63,64,7,0,0,0,64,13,1,0,0,0,7,17,21,38,
-		49,51,58,60
+		4,1,29,117,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		7,7,2,8,7,8,2,9,7,9,2,10,7,10,1,0,5,0,24,8,0,10,0,12,0,27,9,0,1,1,1,1,
+		1,1,1,1,1,1,1,1,1,1,3,1,36,8,1,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,3,1,3,
+		1,3,1,3,3,3,50,8,3,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,1,5,1,5,
+		1,5,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,3,7,78,8,7,1,8,1,8,
+		1,8,1,9,1,9,5,9,85,8,9,10,9,12,9,88,9,9,1,9,1,9,1,10,1,10,1,10,1,10,1,
+		10,1,10,1,10,1,10,1,10,3,10,101,8,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,
+		1,10,1,10,5,10,112,8,10,10,10,12,10,115,9,10,1,10,0,1,20,11,0,2,4,6,8,
+		10,12,14,16,18,20,0,3,1,0,14,15,1,0,16,18,1,0,19,24,122,0,25,1,0,0,0,2,
+		35,1,0,0,0,4,37,1,0,0,0,6,42,1,0,0,0,8,51,1,0,0,0,10,57,1,0,0,0,12,65,
+		1,0,0,0,14,77,1,0,0,0,16,79,1,0,0,0,18,82,1,0,0,0,20,100,1,0,0,0,22,24,
+		3,2,1,0,23,22,1,0,0,0,24,27,1,0,0,0,25,23,1,0,0,0,25,26,1,0,0,0,26,1,1,
+		0,0,0,27,25,1,0,0,0,28,36,3,4,2,0,29,36,3,6,3,0,30,36,3,8,4,0,31,36,3,
+		10,5,0,32,36,3,16,8,0,33,36,3,12,6,0,34,36,3,14,7,0,35,28,1,0,0,0,35,29,
+		1,0,0,0,35,30,1,0,0,0,35,31,1,0,0,0,35,32,1,0,0,0,35,33,1,0,0,0,35,34,
+		1,0,0,0,36,3,1,0,0,0,37,38,5,25,0,0,38,39,5,1,0,0,39,40,3,20,10,0,40,41,
+		5,2,0,0,41,5,1,0,0,0,42,43,5,3,0,0,43,44,5,4,0,0,44,45,3,20,10,0,45,46,
+		5,5,0,0,46,49,3,18,9,0,47,48,5,6,0,0,48,50,3,18,9,0,49,47,1,0,0,0,49,50,
+		1,0,0,0,50,7,1,0,0,0,51,52,5,7,0,0,52,53,5,4,0,0,53,54,3,20,10,0,54,55,
+		5,5,0,0,55,56,3,18,9,0,56,9,1,0,0,0,57,58,5,8,0,0,58,59,3,18,9,0,59,60,
+		5,7,0,0,60,61,5,4,0,0,61,62,3,20,10,0,62,63,5,5,0,0,63,64,5,2,0,0,64,11,
+		1,0,0,0,65,66,5,9,0,0,66,67,5,25,0,0,67,68,5,2,0,0,68,13,1,0,0,0,69,70,
+		5,10,0,0,70,71,3,20,10,0,71,72,5,2,0,0,72,78,1,0,0,0,73,74,5,11,0,0,74,
+		75,3,20,10,0,75,76,5,2,0,0,76,78,1,0,0,0,77,69,1,0,0,0,77,73,1,0,0,0,78,
+		15,1,0,0,0,79,80,3,20,10,0,80,81,5,2,0,0,81,17,1,0,0,0,82,86,5,12,0,0,
+		83,85,3,2,1,0,84,83,1,0,0,0,85,88,1,0,0,0,86,84,1,0,0,0,86,87,1,0,0,0,
+		87,89,1,0,0,0,88,86,1,0,0,0,89,90,5,13,0,0,90,19,1,0,0,0,91,92,6,10,-1,
+		0,92,93,5,4,0,0,93,94,3,20,10,0,94,95,5,5,0,0,95,101,1,0,0,0,96,101,5,
+		26,0,0,97,101,5,27,0,0,98,101,5,28,0,0,99,101,5,25,0,0,100,91,1,0,0,0,
+		100,96,1,0,0,0,100,97,1,0,0,0,100,98,1,0,0,0,100,99,1,0,0,0,101,113,1,
+		0,0,0,102,103,10,7,0,0,103,104,7,0,0,0,104,112,3,20,10,8,105,106,10,6,
+		0,0,106,107,7,1,0,0,107,112,3,20,10,7,108,109,10,5,0,0,109,110,7,2,0,0,
+		110,112,3,20,10,6,111,102,1,0,0,0,111,105,1,0,0,0,111,108,1,0,0,0,112,
+		115,1,0,0,0,113,111,1,0,0,0,113,114,1,0,0,0,114,21,1,0,0,0,115,113,1,0,
+		0,0,8,25,35,49,77,86,100,111,113
 	};
 
 	public static readonly ATN _ATN =

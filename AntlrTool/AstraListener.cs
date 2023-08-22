@@ -51,53 +51,179 @@ public interface IAstraListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitStatement([NotNull] AstraParser.StatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.declaration"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.assignment"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterDeclaration([NotNull] AstraParser.DeclarationContext context);
+	void EnterAssignment([NotNull] AstraParser.AssignmentContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.declaration"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.assignment"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitDeclaration([NotNull] AstraParser.DeclarationContext context);
+	void ExitAssignment([NotNull] AstraParser.AssignmentContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.expression"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.ifStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterExpression([NotNull] AstraParser.ExpressionContext context);
+	void EnterIfStatement([NotNull] AstraParser.IfStatementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.expression"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.ifStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitExpression([NotNull] AstraParser.ExpressionContext context);
+	void ExitIfStatement([NotNull] AstraParser.IfStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.additive_expression"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.whileStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterAdditive_expression([NotNull] AstraParser.Additive_expressionContext context);
+	void EnterWhileStatement([NotNull] AstraParser.WhileStatementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.additive_expression"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.whileStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitAdditive_expression([NotNull] AstraParser.Additive_expressionContext context);
+	void ExitWhileStatement([NotNull] AstraParser.WhileStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.multiplicative_expression"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.doWhileStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterMultiplicative_expression([NotNull] AstraParser.Multiplicative_expressionContext context);
+	void EnterDoWhileStatement([NotNull] AstraParser.DoWhileStatementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.multiplicative_expression"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.doWhileStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitMultiplicative_expression([NotNull] AstraParser.Multiplicative_expressionContext context);
+	void ExitDoWhileStatement([NotNull] AstraParser.DoWhileStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="AstraParser.primary_expression"/>.
+	/// Enter a parse tree produced by <see cref="AstraParser.inputStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterPrimary_expression([NotNull] AstraParser.Primary_expressionContext context);
+	void EnterInputStatement([NotNull] AstraParser.InputStatementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="AstraParser.primary_expression"/>.
+	/// Exit a parse tree produced by <see cref="AstraParser.inputStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitPrimary_expression([NotNull] AstraParser.Primary_expressionContext context);
+	void ExitInputStatement([NotNull] AstraParser.InputStatementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="AstraParser.outputStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterOutputStatement([NotNull] AstraParser.OutputStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AstraParser.outputStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitOutputStatement([NotNull] AstraParser.OutputStatementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="AstraParser.expressionStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpressionStatement([NotNull] AstraParser.ExpressionStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AstraParser.expressionStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpressionStatement([NotNull] AstraParser.ExpressionStatementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="AstraParser.block"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterBlock([NotNull] AstraParser.BlockContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="AstraParser.block"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitBlock([NotNull] AstraParser.BlockContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>stringLiteral</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterStringLiteral([NotNull] AstraParser.StringLiteralContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>stringLiteral</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitStringLiteral([NotNull] AstraParser.StringLiteralContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>additiveExpression</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAdditiveExpression([NotNull] AstraParser.AdditiveExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>additiveExpression</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAdditiveExpression([NotNull] AstraParser.AdditiveExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>relationalExpression</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRelationalExpression([NotNull] AstraParser.RelationalExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>relationalExpression</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRelationalExpression([NotNull] AstraParser.RelationalExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>intLiteral</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterIntLiteral([NotNull] AstraParser.IntLiteralContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>intLiteral</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitIntLiteral([NotNull] AstraParser.IntLiteralContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>doubleLiteral</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterDoubleLiteral([NotNull] AstraParser.DoubleLiteralContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>doubleLiteral</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitDoubleLiteral([NotNull] AstraParser.DoubleLiteralContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>variable</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterVariable([NotNull] AstraParser.VariableContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>variable</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitVariable([NotNull] AstraParser.VariableContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>parensExpression</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterParensExpression([NotNull] AstraParser.ParensExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>parensExpression</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitParensExpression([NotNull] AstraParser.ParensExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>multiplicativeExpression</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterMultiplicativeExpression([NotNull] AstraParser.MultiplicativeExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>multiplicativeExpression</c>
+	/// labeled alternative in <see cref="AstraParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitMultiplicativeExpression([NotNull] AstraParser.MultiplicativeExpressionContext context);
 }

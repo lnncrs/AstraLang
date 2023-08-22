@@ -149,6 +149,21 @@ Para rodar o projeto
 dotnet run
 ```
 
+## Requisitos funcionais
+
+- Uso da plataforma open source .NET mais recente com linguagem C#, sem código intermediário em linguagens paralelas na fase de tooling
+
+- Permitir desenvolvimento, build e execução em plataforma Windows e Linux
+
+- Geração automática dos arquivos de suporte pelo Antlr4 via registro do tool no projeto .NET
+
+- Arquivo de gramática Antlr sem código de linguagem específica, permitindo implementação posterior facilitada em outras linguagens
+
+- Não alteração dos arquivos gerados pelo tool, acesso as estruturas geradas por herança ou interface para permitir que o arquivo de gramática seja alterado livremente e isso reflita nos arquivos gerados sem perda de código customizado
+
+- Uso do Antlr4 implementado com métodos de visitor
+
+
 
 ## Referências
 
